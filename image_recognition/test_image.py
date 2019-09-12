@@ -13,3 +13,5 @@ class TestImage(TestCase):
         self.assertEqual(p.myMethod(2), 5)
 
 
+
+
