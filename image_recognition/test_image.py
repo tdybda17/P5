@@ -11,3 +11,5 @@ class TestImage(TestCase):
     def test_another_method(self):
         p = Image(3, 3)
         self.assertEqual(p.myMethod(2), 5)
+
+
