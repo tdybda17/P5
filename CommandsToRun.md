@@ -38,7 +38,7 @@ Then run the tests by
 And you should get this
 
     ----------------------------------------------------------------
-    Ran 16 tests in 0.088s
+    Ran 16 tests in 0.088s 
     OK
     
 
