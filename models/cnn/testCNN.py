@@ -21,9 +21,11 @@ categories = {
 
 
 def get_result(result_arr, categories_arr):
-    for res in result_arr:
-        if res is 1:
-            return categories_arr[res]
+    index_of_result = result_arr.index(1)
+    if index_of_result < len(categories_arr):
+        return categories_arr[index_of_result]
+    else:
+        raise Exception('Index of result was higher can size of categories')
 
 
 test_image = image.load_img('testIMG/cardboard281.jpg', target_size=(64, 64))
@@ -31,5 +33,4 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis=0)
 result = classifier.predict(test_image)
 
-
-print(get_result(result, categories))
+print(get_result(result[0], categories))
