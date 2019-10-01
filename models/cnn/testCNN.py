@@ -22,7 +22,8 @@ categories = {
 
 def get_result(result_arr, categories_arr):
     for res in result_arr:
-        return categories_arr[res]
+        if res is 1:
+            return categories_arr[res]
 
 
 test_image = image.load_img('testIMG/cardboard281.jpg', target_size=(64, 64))
