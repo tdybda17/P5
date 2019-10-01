@@ -9,7 +9,7 @@ from keras.preprocessing import image
 
 classifier = load_model('mnist-trained-network.h5')
 
-test_image = image.load_img('testIMG/handwriting_img/2-tal.png', target_size=(64, 64))
+test_image = image.load_img('testIMG/handwriting_img/2-tal.png', target_size=(28, 28))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis=0)
 result = classifier.predict(test_image)
