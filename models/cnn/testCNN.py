@@ -17,7 +17,7 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
 if 1 in result[:, 0]:
-    print("This was correctly cardboard")
+    print("This cardboard was correctly predicted to be: Cardboard")
 else:
     print("This was incorrectly predicted")
 
@@ -27,7 +27,7 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
 if 1 in result[:, 1]:
-    print("This was correctly glass")
+    print("This glass was correctly predicted to be: Glass")
 else:
     print("This was incorrectly predicted")
 
@@ -37,7 +37,7 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
 if 1 in result[:, 2]:
-    print("This was correctly metal")
+    print("This metal was correctly predicted to be: Metal")
 else:
     print("This was incorrectly predicted")
 
@@ -47,7 +47,7 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
 if 1 in result[:, 3]:
-    print("This was correctly paper")
+    print("This paper was correctly predicted to be: Paper")
 else:
     print("This was incorrectly predicted")
 
@@ -57,7 +57,7 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
 if 1 in result[:, 4]:
-    print("This was correctly plastic")
+    print("This plastic was correctly predicted to be: Plastic")
 else:
     print("This was incorrectly predicted")
 
