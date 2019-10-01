@@ -13,6 +13,6 @@ classifier = load_model('mnist-trained-network.h5')
 test_image = image.load_img('testIMG/handwriting_img/2-tal.png', target_size=(28, 28), color_mode='grayscale')
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis=0)
-result = classifier.predict(test_image)
+result = classifier.predict_proba(test_image)
 
 print(result[0])
