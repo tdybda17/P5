@@ -25,11 +25,10 @@ def get_result(result_arr, categories_arr):
         return categories_arr[res]
 
 
-test_image = image.load_img('testIMG/plastic313.jpg', target_size=(64, 64))
+test_image = image.load_img('testIMG/cardboard281.jpg', target_size=(64, 64))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis=0)
 result = classifier.predict(test_image)
 
-print(get_result(result, categories))
 
-
+print(get_result(result))
