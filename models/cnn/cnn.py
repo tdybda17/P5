@@ -64,9 +64,9 @@ test_set = test_datagen.flow_from_directory('dataset/test_set',
 
 classifier.fit_generator(training_set,
                          samples_per_epoch = 8000,
-                         nb_epoch = 50,
+                         nb_epoch = 1,
                          validation_data = test_set,
                          nb_val_samples = 2000)
 
-classifier.save('model.h5')
+#classifier.save('model.h5')
 
