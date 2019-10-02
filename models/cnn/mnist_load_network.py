@@ -10,7 +10,7 @@ from keras.preprocessing import image
 classifier = load_model('mnist-trained-network.h5')
 
 # Load in image
-test_image = image.load_img('testIMG/cat.jpg', target_size=(28, 28), color_mode='grayscale')
+test_image = image.load_img('testIMG/handwriting_img/7050.jpg', target_size=(28, 28), color_mode='grayscale')
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis=0)
 result = classifier.predict_proba(test_image)
