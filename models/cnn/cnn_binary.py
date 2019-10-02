@@ -57,7 +57,7 @@ training_set = train_datagen.flow_from_directory('../../files/images/training_se
                                                  batch_size = 32,
                                                  class_mode = 'binary')
 
-test_set = test_datagen.flow_from_directory('../../files/images/dataset/test_set/waste/cans/200x200-cans',
+test_set = test_datagen.flow_from_directory('../../files/images/test_set/waste/cans/200x200-cans',
                                             target_size = (64, 64),
                                             batch_size = 32,
                                             class_mode = 'binary')
