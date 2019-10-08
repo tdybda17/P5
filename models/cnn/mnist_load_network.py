@@ -15,7 +15,7 @@ image_paths = [
 ]
 
 for path in image_paths:
-    test_image = image.load_img('../../files/images/test_set/waste/cans/' + path, target_size=(28, 28), color_mode='grayscale')
+    test_image = image.load_img('files/images/test_set/waste/cans/' + path, target_size=(28, 28), color_mode='grayscale')
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
     result = classifier.predict_proba(test_image)
