@@ -66,14 +66,14 @@ def load_image_into_numpy_array(image):
 PATH_TO_TEST_IMAGES_DIR = 'test_images'
 TEST_IMAGE_PATHS = [os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 3)]
 
-# Size, in inches, of the output images.
+# Size, in inches, of the Output images.
 IMAGE_SIZE = (12, 8)
 
 
 def run_inference_for_single_image(image, graph):
     with graph.as_default():
         with tf.Session() as sess:
-            # Get handles to input and output tensors
+            # Get handles to input and Output tensors
             ops = tf.get_default_graph().get_operations()
             all_tensor_names = {output.name for op in ops for output in op.outputs}
             tensor_dict = {}
