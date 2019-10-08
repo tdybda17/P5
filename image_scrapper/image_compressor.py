@@ -4,7 +4,7 @@ from resizeimage import resizeimage
 
 import os
 
-path = '/Volumes/BOOT/alu-soda-can/'
+path = '/Volumes/BOOT/sports-car/'
 
 files = []
 # r=root, d=directories, f = files
@@ -19,7 +19,7 @@ for file in files:
     with open(file, 'r+b') as f:
         with Image.open(f) as image:
             cover = resizeimage.resize_cover(image, [200, 200])
-            filename = '/Volumes/BOOT/200x200-cans/can_1_' + str(i) + '.jpg'
+            filename = '/Volumes/BOOT/sports-car-200x200/car_1_' + str(i) + '.jpg'
             cover.save(filename, image.format)
             i = i + 1
             print(filename + ' was saved')
