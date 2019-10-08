@@ -10,9 +10,13 @@ from keras.preprocessing import image
 classifier = load_model('mnist-trained-network.h5')
 
 # Load in image
-test_image = image.load_img('testIMG/cat.jpg', target_size=(28, 28), color_mode='grayscale')
-test_image = image.img_to_array(test_image)
-test_image = np.expand_dims(test_image, axis=0)
-result = classifier.predict_proba(test_image)
+image_paths = [
+    '4.jpg', '19.jpg', '7050.jpg'
+]
 
-print(result[0])
+for path in image_paths:
+    test_image = image.load_img('testIMG/handwriting_img/' + path, target_size=(28, 28), color_mode='grayscale')
+    test_image = image.img_to_array(test_image)
+    test_image = np.expand_dims(test_image, axis=0)
+    result = classifier.predict_proba(test_image)
+    print(result[0])
