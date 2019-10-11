@@ -18,13 +18,16 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
 
-# Initialising the CNN
+# Initialising the CNN with the sequential model
 classifier = Sequential()
 
-# Step 1 - Convolution
+# Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
+# input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
+# values in the matrix to zero.
 classifier.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
 
-# Step 2 - Pooling
+# Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
+# new matrix
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
 
 # Adding a second convolutional layer
@@ -52,12 +55,12 @@ train_datagen = ImageDataGenerator(rescale = 1./255,
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
 
-training_set = train_datagen.flow_from_directory('../../files/images/training_set/waste/cans/200x200-cans',
+training_set = train_datagen.flow_from_directory('../../files/images/training_set/waste',
                                                  target_size = (64, 64),
                                                  batch_size = 32,
                                                  class_mode = 'binary')
 
-test_set = test_datagen.flow_from_directory('../../files/images/test_set/waste/cans/200x200-cans',
+test_set = test_datagen.flow_from_directory('../../files/images/test_set/waste',
                                             target_size = (64, 64),
                                             batch_size = 32,
                                             class_mode = 'binary')
