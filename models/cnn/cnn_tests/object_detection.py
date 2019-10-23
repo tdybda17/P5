@@ -5,14 +5,13 @@ import numpy as np
 
 # Create an Image object from an Image
 
-imageObject = Image.open("../testIMG/car.jpg")
+imageObject = Image.open("../testIMG/frog.jpeg")
+
 
 # Crop the iceberg portion
+a = np.asarray(imageObject)
 
-pix = np.array(imageObject)
-
-
-
+print(a[10,10])
 
 cropped = imageObject.crop((100, 30, 400, 300))
 
