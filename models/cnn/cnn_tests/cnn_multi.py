@@ -17,6 +17,8 @@ from keras.layers import Convolution2D
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
+from keras import backend as K
+import matplotlib.pyplot as plt
 
 # Initialising the CNN with the sequential model
 classifier = Sequential()
@@ -24,7 +26,7 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
+classifier.add(Convolution2D(32, 3, 3, input_shape = (200, 112, 3), activation = 'relu'))
 
 # Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
 # new matrix
@@ -57,19 +59,42 @@ train_datagen = ImageDataGenerator(rescale = 1./255,
 test_datagen = ImageDataGenerator(rescale = 1./255)
 
 training_set = train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
-                                                 target_size = (64, 64),
+                                                 target_size = (200, 112),
                                                  batch_size = 32,
                                                  class_mode = 'categorical')
 
 test_set = test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
-                                            target_size = (64, 64),
+                                            target_size = (200, 112),
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
-classifier.fit_generator(training_set,
+history = classifier.fit_generator(training_set,
                          samples_per_epoch = 8000,
-                         nb_epoch = 1,
+                         nb_epoch = 3,
                          validation_data = test_set,
                          nb_val_samples = 2000)
 
-classifier.save('categoricalModel.h5')
+history_dict = history.history
+history_dict.keys()
+
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs = range(1, len(acc) + 1)
+plt.clf()
+# "bo" is for "blue dot"
+plt.plot(epochs, loss, 'bo', label='Training loss')
+# b is for "solid blue line"
+plt.plot(epochs, val_loss, 'b', label='Validation loss')
+plt.title('Training and validation loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.show()
+
+
+# classifier.save('categoricalModel.h5')
+K.clear_session()
