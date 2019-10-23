@@ -5,15 +5,16 @@ import numpy as np
 
 # Create an Image object from an Image
 
-imageObject = Image.open("../testIMG/frog.jpeg")
+imageObject = Image.open("../../../files/images/dataset-resized/test_data/Batterier/aTest1.jpg")
 
 
 # Crop the iceberg portion
-a = np.asarray(imageObject)
 
-print(a[10,10])
+cropped = imageObject.crop((0, 100, 1920, 1000))
 
-cropped = imageObject.crop((100, 30, 400, 300))
+arr = np.asarray(cropped)
+
+print(arr[200, 200])
 
 # Display the cropped portion
 
