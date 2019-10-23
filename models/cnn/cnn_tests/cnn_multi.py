@@ -19,6 +19,7 @@ from keras.layers import Flatten
 from keras.layers import Dense
 from keras import backend as K
 import matplotlib.pyplot as plt
+import models.cnn.cnn_tests.customfunctions
 
 # Initialising the CNN with the sequential model
 classifier = Sequential()
@@ -47,7 +48,6 @@ classifier.add(Dense(activation="softmax", units=5))
 classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
-
 
 from keras.preprocessing.image import ImageDataGenerator
 
