@@ -15,7 +15,7 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(getinitconvlayer(32, 3, 3))
+classifier.add(getinitconvlayer(64, 3, 3))
 
 # Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
 # new matrix
@@ -47,12 +47,12 @@ train_datagen = ImageDataGenerator(rescale = 1./255,
 test_datagen = ImageDataGenerator(rescale = 1./255)
 
 training_set = train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
-                                                 target_size = (200, 112),
+                                                 target_size = (128, 128),
                                                  batch_size = 32,
                                                  class_mode = 'categorical')
 
 test_set = test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
-                                            target_size = (200, 112),
+                                            target_size = (128, 128),
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
