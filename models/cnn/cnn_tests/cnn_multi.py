@@ -30,7 +30,7 @@ classifier.add(Flatten())
 
 # Step 4 - Full connection
 classifier.add(getdenselayer(128))
-classifier.add(Dense(activation="softmax", units=5))
+classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
 classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
@@ -57,8 +57,8 @@ test_set = test_datagen.flow_from_directory('../../files/images/dataset-resized/
                                             class_mode = 'categorical')
 
 history = classifier.fit_generator(training_set,
-                         samples_per_epoch = 100, #var 8000
-                         nb_epoch = 1,
+                         samples_per_epoch = 6000,
+                         nb_epoch = 35,
                          validation_data = test_set,
                          nb_val_samples = 2000)
 
