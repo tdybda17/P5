@@ -9,7 +9,7 @@ import time
 
 
 def getinitconvlayer(filters, kernel, stride):
-    return Convolution2D(filters, kernel, stride, input_shape=(200, 112, 3), activation='relu')
+    return Convolution2D(filters, kernel, stride, input_shape=(128, 128, 3), activation='relu')
 
 
 def getconvlayer(filters, kernel, stride):
@@ -40,14 +40,13 @@ def createplot(history):
     epochs = range(1, len(acc) + 1)
     plt.clf()
     # "bo" is for "blue dot"
-    plt.plot(epochs, loss, 'bo', label='Training loss')
+    plt.plot(epochs, acc, 'bo', label='Training acc')
     # b is for "solid blue line"
-    plt.plot(epochs, val_loss, 'b', label='Validation loss')
-    plt.title('Training and validation loss')
+    plt.plot(epochs, val_acc, 'b', label='Validation acc')
+    plt.title('Training and validation acc')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    timestr = time.strftime("%H:%M:%S-%d%m")
-    plt.savefig(timestr)
-    plt.show()
+    plt.savefig('1')
+
 
