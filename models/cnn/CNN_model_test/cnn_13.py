@@ -22,10 +22,10 @@ classifier.add(getinitconvlayer(64, 2, 1))
 classifier.add(getmaxpoollayer(2))
 
 # Adding a second convolutional layer
-classifier.add(getconvlayer(32, 2, 1))
+classifier.add(getconvlayer(128, 2, 1))
 classifier.add(getmaxpoollayer(2))
 
-classifier.add(getconvlayer(16, 2, 1))
+classifier.add(getconvlayer(256, 2, 1))
 classifier.add(getmaxpoollayer(2))
 
 # Step 3 - Flattening
