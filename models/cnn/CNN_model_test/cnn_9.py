@@ -16,15 +16,15 @@ classifier = Sequential()
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
 classifier.add(getinitconvlayer(64, 4, 1))
-classifier.add(getconvlayer(32, 4, 1))
+classifier.add(getconvlayer(64, 4, 1))
 
 # Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
 # new matrix
 classifier.add(getmaxpoollayer(2))
 
 # Adding a second convolutional layer
-classifier.add(getconvlayer(64, 4, 1))
-classifier.add(getconvlayer(32, 4, 1))
+classifier.add(getconvlayer(128, 4, 1))
+classifier.add(getconvlayer(128, 4, 1))
 classifier.add(getmaxpoollayer(2))
 
 # Step 3 - Flattening
