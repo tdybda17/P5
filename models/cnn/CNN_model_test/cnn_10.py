@@ -17,15 +17,15 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(getinitconvlayer(128, 2, 2))
-classifier.add(getconvlayer(128, 2, 2))
+classifier.add(getinitconvlayer(64, 2, 2))
+classifier.add(getconvlayer(64, 2, 2))
 # Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
 # new matrix
 classifier.add(getmaxpoollayer(3))
 
 # Adding a second convolutional layer
-classifier.add(getconvlayer(64, 2, 2))
-classifier.add(getconvlayer(64, 2, 2))
+classifier.add(getconvlayer(128, 2, 2))
+classifier.add(getconvlayer(128, 2, 2))
 classifier.add(getmaxpoollayer(3))
 
 # Step 3 - Flattening
