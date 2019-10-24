@@ -7,7 +7,9 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
 from keras import backend as K
-from models.cnn.cnn_tests.customfunctions import getinitconvlayer, getconvlayer, getmaxpoollayer, getdropoutlayer, getdenselayer, createplot
+from models.cnn.cnn_tests.customfunctions import getinitconvlayer, getconvlayer, \
+    getmaxpoollayer, getdropoutlayer, getdenselayer, createplot, getfitgenerator, \
+    gettraindatagen, gettestdatagen, getimagedatagen, getrescalegen
 
 # Initialising the CNN with the sequential model
 classifier = Sequential()
@@ -36,32 +38,15 @@ classifier.add(Dense(activation="softmax", units=3))
 classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
+train_datagen = getimagedatagen()
 
-from keras.preprocessing.image import ImageDataGenerator
+test_datagen = getrescalegen()
 
-train_datagen = ImageDataGenerator(rescale = 1./255,
-                                   shear_range = 0.2,
-                                   zoom_range = 0.2,
-                                   horizontal_flip = True)
+training_set = gettraindatagen(train_datagen)
 
-test_datagen = ImageDataGenerator(rescale = 1./255)
+test_set = gettestdatagen(test_datagen)
 
-training_set = train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
-                                                 target_size = (128, 128),
-                                                 batch_size = 32,
-                                                 class_mode = 'categorical')
-
-test_set = test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
-                                            target_size = (128, 128),
-                                            batch_size = 32,
-                                            class_mode = 'categorical')
-
-history = classifier.fit_generator(training_set,
-                         samples_per_epoch = 6000,
-                         nb_epoch = 35,
-                         validation_data = test_set,
-                         nb_val_samples = 2000)
-
+history = getfitgenerator(classifier, training_set, test_set)
 createplot(history)
 
 

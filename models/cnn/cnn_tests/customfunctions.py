@@ -5,7 +5,8 @@ from keras.layers import MaxPooling2D
 from keras.layers import Dropout
 from keras.layers import Dense
 import matplotlib.pyplot as plt
-import time
+from keras.preprocessing.image import ImageDataGenerator
+
 
 
 def getinitconvlayer(filters, kernel, stride):
@@ -26,6 +27,35 @@ def getdropoutlayer(dropout):
 
 def getdenselayer(units):
     return Dense(activation="relu", units=units)
+
+
+def getfitgenerator(classifier, trainingset, testset):
+    return classifier.fit_generator(trainingset,
+                             samples_per_epoch=6000,
+                             # integer, number of samples to process before starting a new epoch.
+                             nb_epoch=1,
+                             validation_data=testset,
+                             nb_val_samples=2000)  # number of samples to use from validation generator at the end of every epoch.
+
+def gettraindatagen(train_datagen):
+    return train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
+                                      target_size=(128, 128),
+                                      batch_size=32,
+                                      class_mode='categorical')
+
+def gettestdatagen(test_datagen):
+    return test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
+                                            target_size = (128, 128),
+                                            batch_size = 32,
+                                            class_mode = 'categorical')
+def getimagedatagen():
+    return ImageDataGenerator(rescale = 1./255,
+                                   shear_range = 0.2,
+                                   zoom_range = 0.2,
+                                   horizontal_flip = True)
+
+def getrescalegen():
+    return ImageDataGenerator(rescale = 1./255)
 
 
 def createplot(history):
