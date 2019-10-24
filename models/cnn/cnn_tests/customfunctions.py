@@ -9,7 +9,7 @@ import time
 
 
 def getinitconvlayer(filters, kernel, stride):
-    return Convolution2D(filters, kernel, stride, input_shape=(100, 56, 3), activation='relu')
+    return Convolution2D(filters, kernel, stride, input_shape=(200, 112, 3), activation='relu')
 
 
 def getconvlayer(filters, kernel, stride):
@@ -49,4 +49,5 @@ def createplot(history):
     plt.legend()
     timestr = time.strftime("%H:%M:%S-%d%m")
     plt.savefig(timestr)
+    plt.show()
 
