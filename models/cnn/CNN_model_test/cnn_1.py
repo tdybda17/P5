@@ -35,8 +35,6 @@ classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', met
 
 # Part 2 - Fitting the CNN to the images
 
-
-
 train_datagen = getimagedatagen()
 
 test_datagen = getrescalegen()
@@ -46,7 +44,7 @@ training_set = gettraindatagen(train_datagen)
 test_set = gettestdatagen(test_datagen)
 
 history = getfitgenerator(classifier, training_set, test_set)
-createplot(history)
+createplot(history, '1')
 
 
 # classifier.save('categoricalModel.h5')

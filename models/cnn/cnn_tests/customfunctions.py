@@ -33,18 +33,18 @@ def getfitgenerator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              samples_per_epoch=6000,
                              # integer, number of samples to process before starting a new epoch.
-                             nb_epoch=1,
+                             nb_epoch=5,
                              validation_data=testset,
                              nb_val_samples=2000)  # number of samples to use from validation generator at the end of every epoch.
 
 def gettraindatagen(train_datagen):
-    return train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
+    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/training_data',
                                       target_size=(128, 128),
                                       batch_size=32,
                                       class_mode='categorical')
 
 def gettestdatagen(test_datagen):
-    return test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
+    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/test_data',
                                             target_size = (128, 128),
                                             batch_size = 32,
                                             class_mode = 'categorical')
@@ -58,7 +58,7 @@ def getrescalegen():
     return ImageDataGenerator(rescale = 1./255)
 
 
-def createplot(history):
+def createplot(history, name):
     history_dict = history.history
     history_dict.keys()
 
@@ -77,6 +77,6 @@ def createplot(history):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.savefig('1')
+    plt.savefig(name)
 
 
