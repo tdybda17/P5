@@ -33,7 +33,7 @@ def getfitgenerator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              samples_per_epoch=6000,
                              # integer, number of samples to process before starting a new epoch.
-                             nb_epoch=5,
+                             nb_epoch=10,
                              validation_data=testset,
                              nb_val_samples=2000)  # number of samples to use from validation generator at the end of every epoch.
 
