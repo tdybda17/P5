@@ -38,14 +38,14 @@ def get_fit_generator(classifier, trainingset, testset):
 
 
 def get_train_data_gen(train_datagen):
-    return train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
+    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/training_data',
                                       target_size=(128, 128),
                                       batch_size=32,
                                       class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
-    return test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
+    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/test_data',
                                             target_size = (128, 128),
                                             batch_size = 32,
                                             class_mode = 'categorical')
