@@ -1,6 +1,6 @@
 import os
 
-from keras.layers import Convolution2D
+from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
 from keras.layers import Dropout
 from keras.layers import Dense
@@ -10,11 +10,11 @@ from keras.preprocessing.image import ImageDataGenerator
 
 
 def getinitconvlayer(filters, kernel, stride):
-    return Convolution2D(filters, kernel, stride, input_shape=(128, 128, 3), activation='relu')
+    return Conv2D(filters, (kernel, stride), input_shape=(128, 128, 3), activation='relu')
 
 
 def getconvlayer(filters, kernel, stride):
-    return Convolution2D(filters, kernel, stride, activation='relu')
+    return Conv2D(filters, (kernel, stride), activation='relu')
 
 
 def getmaxpoollayer(size):
@@ -31,20 +31,20 @@ def getdenselayer(units):
 
 def getfitgenerator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
-                             samples_per_epoch=6000,
+                             # steps_per_epoch=6000,
                              # integer, number of samples to process before starting a new epoch.
-                             nb_epoch=5,
-                             validation_data=testset,
-                             nb_val_samples=2000)  # number of samples to use from validation generator at the end of every epoch.
+                             epochs=5,
+                             validation_data=testset)
+                             # validation_steps=2000)  # number of samples to use from validation generator at the end of every epoch.
 
 def gettraindatagen(train_datagen):
-    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/training_data',
+    return train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
                                       target_size=(128, 128),
                                       batch_size=32,
                                       class_mode='categorical')
 
 def gettestdatagen(test_datagen):
-    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/test_data',
+    return test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
                                             target_size = (128, 128),
                                             batch_size = 32,
                                             class_mode = 'categorical')
