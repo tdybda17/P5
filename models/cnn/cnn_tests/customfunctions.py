@@ -8,8 +8,7 @@ import matplotlib.pyplot as plt
 from keras.preprocessing.image import ImageDataGenerator
 
 
-
-def getinitconvlayer(filters, kernel, stride):
+def get_init_conv_layer(filters, kernel, stride):
     return Conv2D(filters, (kernel, stride), input_shape=(128, 128, 3), activation='relu')
 
 

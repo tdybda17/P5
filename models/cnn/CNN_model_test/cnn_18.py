@@ -7,7 +7,7 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
 from keras import backend as K
-from models.cnn.cnn_tests.customfunctions import getinitconvlayer, getconvlayer, \
+from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, getconvlayer, \
     getmaxpoollayer, getdropoutlayer, getdenselayer, createplot, getfitgenerator, \
     gettraindatagen, gettestdatagen, getimagedatagen, getrescalegen
 
@@ -17,7 +17,7 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(getinitconvlayer(64, 4, 2))
+classifier.add(get_init_conv_layer(64, 4, 2))
 classifier.add(getconvlayer(64, 4, 2))
 classifier.add(getconvlayer(64, 4, 2))
 
