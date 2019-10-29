@@ -17,17 +17,22 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(get_init_conv_layer(64, 2, 1))
-
-# Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
-# new matrix
+classifier.add(get_init_conv_layer(32, 3, 3))
 classifier.add(get_maxpool_layer(2))
+classifier.add(get_conv_layer(64, 3, 3))
+classifier.add(get_maxpool_layer(2))
+classifier.add(get_conv_layer(128, 3, 3))
+classifier.add(get_maxpool_layer(2))
+classifier.add(get_conv_layer(128, 3, 3))
+classifier.add(get_maxpool_layer(2))
+
+
 
 # Step 3 - Flattening
 classifier.add(Flatten())
 classifier.add(Dropout(0.5))
 # Step 4 - Full connection
-classifier.add(get_dense_layer(64))
+classifier.add(get_dense_layer(512))
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
