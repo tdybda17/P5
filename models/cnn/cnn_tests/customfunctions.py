@@ -38,14 +38,14 @@ def get_fit_generator(classifier, trainingset, testset):
 
 
 def get_train_data_gen(train_datagen):
-    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/training_data',
+    return train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
                                       target_size=(128, 128),
                                       batch_size=32,
                                       class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
-    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/test_data',
+    return test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
                                             target_size = (128, 128),
                                             batch_size = 32,
                                             class_mode = 'categorical')
@@ -74,10 +74,10 @@ def create_plot(history, name):
     epochs = range(1, len(acc) + 1)
     plt.clf()
     # "bo" is for "blue dot"
-    plt.plot(epochs, acc, 'bo', label='Training acc')
+    plt.plot(epochs, loss, 'bo', label='Training loss')
     # b is for "solid blue line"
-    plt.plot(epochs, val_acc, 'b', label='Validation acc')
-    plt.title('Training and validation acc')
+    plt.plot(epochs, val_loss, 'b', label='Validation loss')
+    plt.title('Training and validation loss')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
