@@ -9,11 +9,11 @@ from keras.preprocessing.image import ImageDataGenerator
 
 
 def get_init_conv_layer(filters, kernel, stride):
-    return Conv2D(filters, (kernel, stride), input_shape=(128, 128, 3), activation='relu')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(128, 128, 3), activation='relu')
 
 
 def get_conv_layer(filters, kernel, stride):
-    return Conv2D(filters, (kernel, stride), activation='relu')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu')
 
 
 def get_maxpool_layer(size):
