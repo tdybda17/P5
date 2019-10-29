@@ -7,7 +7,7 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
 from keras import backend as K
-from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, getconvlayer, getmaxpoollayer, getdropoutlayer, getdenselayer, createplot
+from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_layer, get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot
 
 # Initialising the CNN with the sequential model
 classifier = Sequential()
@@ -19,17 +19,17 @@ classifier.add(get_init_conv_layer(32, 3, 3))
 
 # Step 2 - Pooling. Adds a pooling layer with maxpooling, which only saves the max value into the
 # new matrix
-classifier.add(getmaxpoollayer(2))
+classifier.add(get_maxpool_layer(2))
 
 # Adding a second convolutional layer
-classifier.add(getconvlayer(32, 3, 3))
-classifier.add(getmaxpoollayer(2))
+classifier.add(get_conv_layer(32, 3, 3))
+classifier.add(get_maxpool_layer(2))
 
 # Step 3 - Flattening
 classifier.add(Flatten())
 
 # Step 4 - Full connection
-classifier.add(getdenselayer(128))
+classifier.add(get_dense_layer(128))
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
@@ -62,7 +62,7 @@ history = classifier.fit_generator(training_set,
                          validation_data = test_set,
                          nb_val_samples = 2000)
 
-createplot(history)
+create_plot(history)
 
 
 # classifier.save('categoricalModel.h5')

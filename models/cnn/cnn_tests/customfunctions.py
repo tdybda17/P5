@@ -12,23 +12,23 @@ def get_init_conv_layer(filters, kernel, stride):
     return Conv2D(filters, (kernel, stride), input_shape=(128, 128, 3), activation='relu')
 
 
-def getconvlayer(filters, kernel, stride):
+def get_conv_layer(filters, kernel, stride):
     return Conv2D(filters, (kernel, stride), activation='relu')
 
 
-def getmaxpoollayer(size):
+def get_maxpool_layer(size):
     return MaxPooling2D(pool_size=(size, size))
 
 
-def getdropoutlayer(dropout):
+def get_dropout_layer(dropout):
     return Dropout(dropout)
 
 
-def getdenselayer(units):
+def get_dense_layer(units):
     return Dense(activation="relu", units=units)
 
 
-def getfitgenerator(classifier, trainingset, testset):
+def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              # steps_per_epoch=6000,
                              # integer, number of samples to process before starting a new epoch.
@@ -36,28 +36,33 @@ def getfitgenerator(classifier, trainingset, testset):
                              validation_data=testset)
                              # validation_steps=2000)  # number of samples to use from validation generator at the end of every epoch.
 
-def gettraindatagen(train_datagen):
+
+def get_train_data_gen(train_datagen):
     return train_datagen.flow_from_directory('../../files/images/dataset-resized/training_data',
                                       target_size=(128, 128),
                                       batch_size=32,
                                       class_mode='categorical')
 
-def gettestdatagen(test_datagen):
+
+def get_test_data_gen(test_datagen):
     return test_datagen.flow_from_directory('../../files/images/dataset-resized/test_data',
                                             target_size = (128, 128),
                                             batch_size = 32,
                                             class_mode = 'categorical')
-def getimagedatagen():
+
+
+def get_image_data_gen():
     return ImageDataGenerator(rescale = 1./255,
                                    shear_range = 0.2,
                                    zoom_range = 0.2,
                                    horizontal_flip = True)
 
-def getrescalegen():
+
+def get_rescale_gen():
     return ImageDataGenerator(rescale = 1./255)
 
 
-def createplot(history, name):
+def create_plot(history, name):
     history_dict = history.history
     history_dict.keys()
 
