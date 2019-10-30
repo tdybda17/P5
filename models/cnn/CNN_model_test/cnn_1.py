@@ -44,7 +44,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'test1')
+create_plot(history, 't1v2')
 
 # classifier.save('categoricalModel.h5')
 
