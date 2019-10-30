@@ -47,4 +47,5 @@ history = get_fit_generator(classifier, training_set, test_set)
 create_plot(history, 'test1')
 
 # classifier.save('categoricalModel.h5')
+
 K.clear_session()
