@@ -7,6 +7,8 @@ from keras.preprocessing.image import ImageDataGenerator
 
 from image_compressor.dir_walker.dir_walker import walk_dir
 
+test_size = len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg']))
+
 
 def get_init_conv_layer(filters, kernel, stride):
     return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(200, 112, 3), activation='relu')
@@ -32,9 +34,9 @@ def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              #steps_per_epoch=100,
                              # integer, number of samples to process before starting a new epoch.
-                             epochs=30,
+                             epochs=20,
                              validation_data=testset,
-                             validation_steps= len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg'])))  # number of samples to use from validation generator at the end of every epoch.
+                             validation_steps= test_size)  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):
@@ -82,6 +84,7 @@ def create_plot(history, name):
     plt.title('Training and validation acc')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
+    plt.ylim(0, 1)
     plt.legend()
     plt.savefig(name)
 

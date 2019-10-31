@@ -17,11 +17,11 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(get_init_conv_layer(32, 4, 2))
+classifier.add(get_init_conv_layer(32, 3, 2))
 classifier.add(get_maxpool_layer(2))
-classifier.add(get_conv_layer(64, 4, 2))
+classifier.add(get_conv_layer(64, 3, 2))
 classifier.add(get_maxpool_layer(2))
-classifier.add(get_conv_layer(128, 4, 2))
+classifier.add(get_conv_layer(128, 3, 2))
 classifier.add(get_maxpool_layer(2))
 
 
@@ -50,7 +50,7 @@ train_generator = get_train_data_gen(train_datagen)
 validation_generator = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, train_generator, validation_generator)
-create_plot(history, '10epoch')
+create_plot(history, '20epochRMS')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()
