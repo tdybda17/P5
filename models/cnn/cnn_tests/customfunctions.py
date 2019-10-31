@@ -17,7 +17,7 @@ def get_conv_layer(filters, kernel, stride):
 
 
 def get_maxpool_layer(size):
-    return MaxPooling2D(pool_size=(size, size))
+    return MaxPooling2D(pool_size=(size, size), strides=size)
 
 
 def get_dropout_layer(dropout):
@@ -32,9 +32,9 @@ def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              # steps_per_epoch=6000,
                              # integer, number of samples to process before starting a new epoch.
-                             epochs=10,
+                             epochs=3,
                              validation_data=testset,
-                             validation_steps= 1121 // 32)  # number of samples to use from validation generator at the end of every epoch.
+                             validation_steps= 970 // 32)  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):

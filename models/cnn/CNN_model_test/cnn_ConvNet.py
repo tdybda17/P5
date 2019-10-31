@@ -17,23 +17,36 @@ classifier = Sequential()
 # Step 1 - Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is relu, which makes all negative
 # values in the matrix to zero.
-classifier.add(get_init_conv_layer(32, 4, 2))
-classifier.add(get_maxpool_layer(2))
-classifier.add(get_conv_layer(64, 4, 2))
-classifier.add(get_maxpool_layer(2))
-classifier.add(get_conv_layer(128, 4, 2))
-classifier.add(get_maxpool_layer(2))
+classifier.add(get_init_conv_layer(64, 3, 1)) # ned til 198 x 110
+classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
+
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 97 x 53
+classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
+
+
+classifier.add(get_conv_layer(256, 3, 1)) # ned til 46 x 24
+classifier.add(get_conv_layer(256, 3, 1)) # ned til 44 x 22
+classifier.add(get_maxpool_layer(2)) # ned til 22 x 11
+
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 20 x 9
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 18 x 7
+classifier.add(get_maxpool_layer(2)) # ned til 9 x 3
+
+#classifier.add(get_conv_layer(512, 3, 1)) # ned til 7 x 1
+#classifier.add(get_conv_layer(512, 3, 1))
+#classifier.add(get_maxpool_layer(2))
+
 
 
 # Step 3 - Flattening
 classifier.add(Flatten())
 classifier.add(Dropout(0.5))
 # Step 4 - Full connection
-classifier.add(get_dense_layer(512))
+classifier.add(get_dense_layer(1024))
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
-classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
 
@@ -46,7 +59,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'AdamJesper200Epochs')
+create_plot(history, 'ConvNet')
 
-# classifier.save('categoricalModel.h5')
+# classifier.save('categoricalModeltest.h5')
 K.clear_session()
