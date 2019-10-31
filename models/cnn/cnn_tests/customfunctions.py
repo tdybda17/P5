@@ -30,11 +30,11 @@ def get_dense_layer(units):
 
 def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
-                             steps_per_epoch=100,
+
                              # integer, number of samples to process before starting a new epoch.
-                             epochs=3,
+                             epochs=10,
                              validation_data=testset,
-                             validation_steps= 970)  # number of samples to use from validation generator at the end of every epoch.
+                             validation_steps= 917)  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):
@@ -82,7 +82,6 @@ def create_plot(history, name):
     plt.title('Training and validation acc')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
+    plt.ylim([0,1])
     plt.legend()
     plt.savefig(name)
-
-

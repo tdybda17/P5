@@ -29,8 +29,9 @@ classifier.add(get_maxpool_layer(2))
 
 
 # Step 3 - Flattening
-classifier.add(Flatten())
 classifier.add(Dropout(0.5))
+classifier.add(Flatten())
+
 # Step 4 - Full connection
 classifier.add(get_dense_layer(512))
 classifier.add(Dense(activation="softmax", units=3))
@@ -49,7 +50,7 @@ train_generator = get_train_data_gen(train_datagen)
 validation_generator = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, train_generator, validation_generator)
-create_plot(history, 'RMSTA3Epoch')
+create_plot(history, '10epoch')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()
