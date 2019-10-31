@@ -27,6 +27,7 @@ classifier.add(get_maxpool_layer(2))
 
 
 
+
 # Step 3 - Flattening
 classifier.add(Flatten())
 classifier.add(Dropout(0.5))
