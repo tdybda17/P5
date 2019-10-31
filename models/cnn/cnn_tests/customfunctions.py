@@ -1,11 +1,11 @@
-import os
-
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import Dropout
-from keras.layers import Dense
 import matplotlib.pyplot as plt
+from keras.layers import Conv2D
+from keras.layers import Dense
+from keras.layers import Dropout
+from keras.layers import MaxPooling2D
 from keras.preprocessing.image import ImageDataGenerator
+
+from image_compressor.dir_walker.dir_walker import walk_dir
 
 
 def get_init_conv_layer(filters, kernel, stride):
@@ -30,11 +30,11 @@ def get_dense_layer(units):
 
 def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
-
+                             #steps_per_epoch=100,
                              # integer, number of samples to process before starting a new epoch.
-                             epochs=10,
+                             epochs=30,
                              validation_data=testset,
-                             validation_steps= 917)  # number of samples to use from validation generator at the end of every epoch.
+                             validation_steps= len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg'])))  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):
@@ -82,6 +82,7 @@ def create_plot(history, name):
     plt.title('Training and validation acc')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
-    plt.ylim([0,1])
     plt.legend()
     plt.savefig(name)
+
+
