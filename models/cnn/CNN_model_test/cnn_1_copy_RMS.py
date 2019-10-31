@@ -43,12 +43,12 @@ train_datagen = get_image_data_gen()
 
 test_datagen = get_rescale_gen()
 
-training_set = get_train_data_gen(train_datagen)
+train_generator = get_train_data_gen(train_datagen)
 
-test_set = get_test_data_gen(test_datagen)
+validation_generator = get_test_data_gen(test_datagen)
 
-history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'RMSTA200Epoch')
+history = get_fit_generator(classifier, train_generator, validation_generator)
+create_plot(history, 'RMSTA3Epoch')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()

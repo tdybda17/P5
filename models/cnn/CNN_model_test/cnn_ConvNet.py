@@ -23,7 +23,6 @@ classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
 classifier.add(get_conv_layer(128, 3, 1)) # ned til 97 x 53
 classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
 
-
 classifier.add(get_conv_layer(256, 3, 1)) # ned til 46 x 24
 classifier.add(get_conv_layer(256, 3, 1)) # ned til 44 x 22
 classifier.add(get_maxpool_layer(2)) # ned til 22 x 11
