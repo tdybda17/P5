@@ -26,8 +26,8 @@ classifier.add(get_maxpool_layer(2))
 
 
 # Step 3 - Flattening
-classifier.add(Flatten())
 classifier.add(Dropout(0.5))
+classifier.add(Flatten())
 # Step 4 - Full connection
 classifier.add(get_dense_layer(512))
 classifier.add(Dense(activation="softmax", units=3))
@@ -46,7 +46,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'AdamJesper200Epochs')
+create_plot(history, 'AdamTA10Epochsbatteri')
 
 # classifier.save('categoricalModel.h5')
 K.clear_session()
