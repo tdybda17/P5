@@ -1,5 +1,5 @@
 Connect til ev3 via SSH:
-    ev3dev
+    Hostname: ev3dev
     Port: 22
     Username: robot
     Password: maker

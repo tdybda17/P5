@@ -1,3 +1,5 @@
+scp
+paramiko
 rpyc==3.3.0
 icrawler
 cycler==0.10.0
