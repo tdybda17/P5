@@ -24,8 +24,9 @@ classifier.add(get_conv_layer(128, 3, 2)) # ned til 97 x 53
 classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
 
 classifier.add(get_conv_layer(256, 3, 2)) # ned til 46 x 24
-# classifier.add(get_conv_layer(256, 3, 2)) # ned til 44 x 22
-classifier.add(get_maxpool_layer(2)) # ned til 22 x 11
+# classifier.add(get_conv_layer(256, 3, 2))
+classifier.add(get_maxpool_layer(2)) # ned til 23 x 12
+
 
 
 #classifier.add(get_conv_layer(512, 3, 1)) # ned til 7 x 1
@@ -39,7 +40,9 @@ classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 
 # Step 4 - Full connection
+classifier.add(get_dense_layer(2048))
 classifier.add(get_dense_layer(1024))
+classifier.add(get_dense_layer(512))
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
@@ -56,7 +59,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'RMS20epochsconv')
+create_plot(history, 'RMS20epochsconv3dense')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()
