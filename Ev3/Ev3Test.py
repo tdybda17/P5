@@ -57,7 +57,10 @@ def main() :
     print('Ev3 imports done')
     print("cv2 version: " + cv2.__version__)
 
-    take_picture()
+    #take_picture()
+    #m1, m2 = initialize_motors()
+    #stop_motors(m1, m2)
+    lcd.print("teeeeeeeeeeeeeeeeeeeeeeeeeeest")
 
 if __name__ == '__main__':
     main()
