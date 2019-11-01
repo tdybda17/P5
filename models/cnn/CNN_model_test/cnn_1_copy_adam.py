@@ -7,6 +7,8 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
 from keras import backend as K
+
+from image_compressor.dir_walker.dir_walker import walk_dir
 from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_layer, \
     get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
@@ -46,7 +48,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'AdamTA10Epochsbatteri')
+create_plot(history, 'Adam30_batteri')
 
 # classifier.save('categoricalModel.h5')
 K.clear_session()
