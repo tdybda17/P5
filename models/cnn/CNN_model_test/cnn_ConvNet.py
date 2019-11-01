@@ -40,9 +40,9 @@ classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 
 # Step 4 - Full connection
-classifier.add(get_dense_layer(2048))
+
 classifier.add(get_dense_layer(1024))
-classifier.add(get_dense_layer(512))
+
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
@@ -59,7 +59,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'RMS20epochsconv3dense')
+create_plot(history, 'RMS20epochsconv3recreation')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()
