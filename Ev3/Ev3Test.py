@@ -1,6 +1,7 @@
 import rpyc
 from paramiko import SSHClient, AutoAddPolicy
 from scp import SCPClient
+import os
 
 #imports
 conn = rpyc.classic.connect('ev3dev')
@@ -33,8 +34,8 @@ def create_ssh_client(server, port, user, password) :
 def get_picture() :
     ssh = create_ssh_client("ev3dev", "22", "robot", "maker")
     scp = SCPClient(ssh.get_transport())
-
-    scp.get("/home/robot/vscode-hello-python-master/billede/billede.png", "C:/Users/danny/PycharmProjects/P5/Ev3/pictures")
+    #scp.get("/home/robot/vscode-hello-python-master/billede/billede.png", "C:/Users/danny/PycharmProjects/P5/Ev3/pictures")
+    scp.get("/home/robot/vscode-hello-python-master/billede/billede.png", os.path.abspath("pictures"))
     scp.close()
     print("picture saved")
 
@@ -68,26 +69,21 @@ def stop_motors(m1, m2) :
     m2.on(0)
 
 
-def text_to_screen(text) :
+def write_to_screen(text) :
     display.text_pixels(text, 120, 50, True, 'black', font=ev3_fonts.load('helvB24'))
     display.update()
 
 def main() :
-    #m1, m2 = initialize_motors()
-    inf = initialize_inf()
-
-    while True :
-        text_to_screen(str(inf.proximity))
-
-
-
-    #run_motors(m1, m2, 0)
     print("cv2 version: " + cv2.__version__)
 
-    #take_picture()
+    #m1, m2 = initialize_motors()
+    #inf = initialize_inf()
 
+    # run_motors(m1, m2, 0)
+    take_picture()
 
-
+    #while True :
+        #write_to_screen(str(inf.proximity))
 
 
 if __name__ == '__main__':
