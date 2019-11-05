@@ -10,7 +10,7 @@ from keras import backend as K
 from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_layer, \
     get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
-
+#dont work
 # Initialising the CNN with the sequential model
 classifier = Sequential()
 
@@ -18,7 +18,7 @@ classifier = Sequential()
 # input shape of image should be 64x64x3 and the activation function is ReLu, which makes all negative
 # values in the matrix to zero.
 classifier.add(get_init_conv_layer(64, 4, 2)) # ned til 198 x 110
-classifier.add(get_init_conv_layer(64, 4, 2)) # ned til 198 x 110
+classifier.add(get_conv_layer(64, 4, 2)) # ned til 198 x 110
 classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
 
 classifier.add(get_conv_layer(128, 4, 2)) # ned til 97 x 53
