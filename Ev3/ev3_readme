@@ -7,5 +7,7 @@ Connect til ev3 via SSH:
 cd ind i mappen vscode-hello-python-master hvor der gerne skulle ligge ind fil kaldet: rpyc_server.sh
 
 kør denne med: ./rpyc_server.sh
+eller
+Kør denne direkte fra ev3'en
 
 Vent til serveren er startet og kør Ev3Test.py
