@@ -27,17 +27,17 @@ classifier.add(get_conv_layer(256, 3, 2)) # ned til 46 x 24
 classifier.add(get_maxpool_layer(2)) # ned til 23 x 12
 
 # Flattening
-classifier.add(Dropout(0.5))
+classifier.add(Dropout(0.3))
 classifier.add(Flatten())
 
 # Full connection
 
-classifier.add(get_dense_layer(2048))
+classifier.add(get_dense_layer(1024))
 
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
-classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
 
@@ -50,7 +50,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'adam64cnn_2048dense')
+create_plot(history, 'Model17')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()
