@@ -41,12 +41,12 @@ classifier.add(Flatten())
 
 # Step 4 - Full connection
 
-classifier.add(get_dense_layer(1024))
+classifier.add(get_dense_layer(2048))
 
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
-classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
 
@@ -59,7 +59,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'RMS20epochsconv3recreation')
+create_plot(history, 'adam64cnn_2048dense')
 
 # classifier.save('categoricalModeltest.h5')
 K.clear_session()
