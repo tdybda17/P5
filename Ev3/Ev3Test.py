@@ -2,7 +2,7 @@ import rpyc
 from paramiko import SSHClient, AutoAddPolicy
 from scp import SCPClient
 import os
-import datetime
+import time
 
 #imports
 conn = rpyc.classic.connect('ev3dev')
@@ -16,6 +16,7 @@ ev3_fonts = conn.modules['ev3dev2.fonts']
 cv2 = conn.modules['cv2']
 
 print('Imports done')
+
 
 #initializations
 webcam = cv2.VideoCapture(0)
@@ -32,15 +33,16 @@ def create_ssh_client(server, port, user, password) :
     client.connect(server, port, user, password)
     return client
 
-
-#Henter billedet fra Ev3'en via en ssh forbindelse og ligger filen ind i mappen pictures i PyCharm
-def get_picture(picture_name, pc_path, i) :
+def setup_ev3_ssh() :
     ssh = create_ssh_client("ev3dev", "22", "robot", "maker")
     scp = SCPClient(ssh.get_transport())
+    return scp
+
+
+#Henter billedet fra Ev3'en via en ssh forbindelse og ligger filen ind i mappen pictures i PyCharm
+def get_picture(picture_name, pc_path, scp) :
     #scp.get("/home/robot/vscode-hello-python-master/billede/billede.png", "C:/Users/danny/PycharmProjects/P5/Ev3/pictures")
     scp.get("/home/robot/vscode-hello-python-master/billede/" + picture_name, pc_path)
-    scp.close()
-    print(str(i) + "_______" + str(datetime.datetime.now().time()))
 
 
 #Initializer og retunere de 2 motorer til båndet
@@ -58,25 +60,29 @@ def initialize_inf() :
 
 
 #Tager et billede og gemmer det på Ev3'en derefter bliver det flyttet over til computeren
-def take_picture() :
+def take_picture(scp) :
     for x in range(4):
         check = webcam.grab()
 
     check, frame = webcam.read()
     cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
     print("Picture taken")
-    get_picture("billede.png", os.path.abspath("pictures"), 0)
+    get_picture("billede.png", os.path.abspath("pictures"), scp)
 
-def take_test_pictures(i) :
+def take_test_pictures(i, scp) :
     for x in range(4):
         check = webcam.grab()
 
     check, frame = webcam.read()
-    cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + str(i) + ".png", frame)
-    print(str(i) + "_______" + str(datetime.datetime.now().time()))
+    cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
+    #Gemt på Ev3
+    print(str(i) + "_" + str(int(round(time.time() * 1000))), end=' ')
 
-    get_picture("billede" + str(i) + ".png", os.path.abspath("test_pictures"), i)
-    write_to_screen("billede gemt")
+    get_picture("billede" + ".png", os.path.abspath("pictures"), scp)
+    # billede gemt på computer
+    print(str(i) + "_" + str(int(round(time.time() * 1000))), end=' ')
+
+
 
 def run_motors(m1, m2, speed) :
     m1.on(speed)
@@ -108,17 +114,25 @@ def inf_check_for_object(inf, start_value) :
 
 def main() :
     print("cv2 version: " + cv2.__version__)
+    scp = setup_ev3_ssh()
 
-    m1, m2 = initialize_motors()
-    inf, start_value = initialize_inf()
+    #m1, m2 = initialize_motors()
+    #inf, start_value = initialize_inf()
 
-    run_motors(m1, m2, 0)
+    #run_motors(m1, m2, 0)
     #take_picture()
 
     i = 0
     while True :
-        take_test_pictures(i)
+        #start
+        print(str(i) + "_" + str(int(round(time.time() * 1000))), end=' ')
+        take_test_pictures(i, scp)
+
+        #slut
+        print(str(i) + "_" + str(int(round(time.time() * 1000))))
         i += 1
+
+    #scp.close()
 
 
 if __name__ == '__main__':
