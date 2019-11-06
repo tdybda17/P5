@@ -13,7 +13,7 @@ test_size = len(walk_dir(path='../../../files/images/dataset-resized/test_data',
 
 
 def get_init_conv_layer(filters, kernel, stride):
-    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(200, 112, 3), activation='relu')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(112, 200, 3), activation='relu')
 
 
 def get_conv_layer(filters, kernel, stride):
@@ -43,14 +43,14 @@ def get_fit_generator(classifier, trainingset, testset):
 
 def get_train_data_gen(train_datagen):
     return train_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/training_data',
-                                      target_size=(200, 112),
+                                      target_size=(112, 200),
                                       batch_size=32,
                                       class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
     return test_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/test_data',
-                                            target_size = (200, 112),
+                                            target_size = (112, 200),
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
