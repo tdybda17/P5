@@ -1,3 +1,5 @@
+Få internet til Ev3'en, se denne guide: https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/
+
 Connect til ev3 via SSH:
     Hostname: ev3dev
     Port: 22
