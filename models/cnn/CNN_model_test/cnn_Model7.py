@@ -49,5 +49,5 @@ test_set = get_test_data_gen(test_datagen)
 history = get_fit_generator(classifier, training_set, test_set)
 create_plot(history, 'model7')
 
-# classifier.save('Model7.h5')
+classifier.save('Model7.h5')
 K.clear_session()
