@@ -17,18 +17,28 @@ classifier = Sequential()
 # Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is ReLu, which makes all negative
 # values in the matrix to zero.
-classifier.add(get_init_conv_layer(64, 4, 2)) # ned til 198 x 110
+classifier.add(get_init_conv_layer(64, 3, 1)) # ned til 198 x 110
+classifier.add(get_conv_layer(64, 3, 1)) # ned til 97 x 53
 classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
 
-classifier.add(get_conv_layer(128, 4, 2)) # ned til 97 x 53
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 97 x 53
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 97 x 53
+classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
+
+classifier.add(get_conv_layer(256, 3, 1)) # ned til 97 x 53
+classifier.add(get_conv_layer(256, 3, 1)) # ned til 97 x 53
+classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
+
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 97 x 53
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 97 x 53
 classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
 
 # Flattening
-classifier.add(Dropout(0.3))
+classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 
 # Full connection
-classifier.add(get_dense_layer(512))
+classifier.add(get_dense_layer(1024))
 classifier.add(get_dense_layer(1024))
 
 classifier.add(Dense(activation="softmax", units=3))
@@ -47,7 +57,7 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, 'model7')
+create_plot(history, 'model7-deep')
 
 classifier.save('Model7.h5')
 K.clear_session()

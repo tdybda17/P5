@@ -9,15 +9,19 @@ from keras.preprocessing.image import ImageDataGenerator
 
 from image_compressor.dir_walker.dir_walker import walk_dir
 
+image_size_x = 150
+image_size_y = 150
+epochs = 20
+batch_size = 32
 test_size = len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg']))
 
 
 def get_init_conv_layer(filters, kernel, stride):
-    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(112, 200, 3), activation='relu')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3), activation='relu')
 
 
 def get_conv_layer(filters, kernel, stride):
-    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu', padding='same')
 
 
 def get_maxpool_layer(size):
@@ -36,21 +40,21 @@ def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              #steps_per_epoch=100,
                              # integer, number of samples to process before starting a new epoch.
-                             epochs=100,
+                             epochs=epochs,
                              validation_data=testset,
-                             validation_steps= test_size // 32)  # number of samples to use from validation generator at the end of every epoch.
+                             validation_steps= test_size // batch_size)  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):
     return train_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/training_data',
-                                      target_size=(112, 200),
-                                      batch_size=32,
+                                      target_size=(image_size_y, image_size_x),
+                                      batch_size=batch_size,
                                       class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
     return test_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/test_data',
-                                            target_size = (112, 200),
+                                            target_size = (image_size_y, image_size_x),
                                             batch_size = 32,
                                             class_mode = 'categorical')
 

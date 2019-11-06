@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 from keras import models
 from keras.preprocessing import image
 
-model = models.load_model('Model7.h5')
+model = models.load_model('Model7stride2_150.h5')
 
 np.set_printoptions(suppress=True)
-img = image.load_img('../../../files/images/dataset-resized/dataset-resized/test_data/Glas/aglas.png', target_size=(150, 150))
+img = image.load_img('../../../files/images/dataset-resized/dataset-resized/test_data/Dåser/can1_31_200x112.jpg', target_size=(150, 150))
 test_image = image.img_to_array(img)
 test_image = test_image/255
 test_image = np.expand_dims(test_image, axis = 0)
