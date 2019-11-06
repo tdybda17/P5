@@ -1,3 +1,5 @@
+from builtins import len, range
+
 import matplotlib.pyplot as plt
 from keras.layers import Conv2D
 from keras.layers import Dense
@@ -34,20 +36,20 @@ def get_fit_generator(classifier, trainingset, testset):
     return classifier.fit_generator(trainingset,
                              #steps_per_epoch=100,
                              # integer, number of samples to process before starting a new epoch.
-                             epochs=10,
+                             epochs=100,
                              validation_data=testset,
-                             validation_steps= test_size)  # number of samples to use from validation generator at the end of every epoch.
+                             validation_steps= test_size // 32)  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):
-    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/training_data',
+    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/training_data',
                                       target_size=(200, 112),
                                       batch_size=32,
                                       class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
-    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/test_data',
+    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/test_data',
                                             target_size = (200, 112),
                                             batch_size = 32,
                                             class_mode = 'categorical')

@@ -1,4 +1,4 @@
-# Part 1 - Building the CNN
+# SEMI LANGSOM
 
 # Importing the Keras libraries and packages
 from keras.models import Sequential
