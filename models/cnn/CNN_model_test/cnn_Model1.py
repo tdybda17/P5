@@ -25,15 +25,12 @@ classifier.add(get_maxpool_layer(2))
 
 classifier.add(get_conv_layer(256, 3, 1))
 classifier.add(get_conv_layer(256, 3, 1))
-classifier.add(get_conv_layer(256, 3, 1))
 classifier.add(get_maxpool_layer(2))
 
 classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_conv_layer(512, 3, 1))
-classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_maxpool_layer(2))
 
-classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_maxpool_layer(2))
@@ -41,9 +38,8 @@ classifier.add(get_maxpool_layer(2))
 classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 
-classifier.add(get_dense_layer(4096))
-classifier.add(get_dense_layer(4096))
-classifier.add(get_dense_layer(1024))
+classifier.add(get_dense_layer(2048))
+classifier.add(get_dense_layer(2048))
 classifier.add(Dense(activation="softmax", units=3))
 
 classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
