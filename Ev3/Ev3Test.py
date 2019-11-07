@@ -21,6 +21,10 @@ print('Imports done')
 
 #initializations for Ev3
 webcam = cv2.VideoCapture(0)
+webcam.set(3, 300)
+webcam.set(4, 300)
+
+
 display = ev3_display.Display()
 
 print('initializations done')
@@ -75,6 +79,7 @@ def take_picture(scp) :
     cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
     print("Picture taken")
     get_picture("billede.png", os.path.abspath("pictures"), scp)
+    print("picture saved")
 
 def take_test_pictures(i, scp) :
     for x in range(4):
@@ -83,11 +88,11 @@ def take_test_pictures(i, scp) :
     check, frame = webcam.read()
     cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
     #Gemt på Ev3
-    print(str(i) + "_" + str(int(round(time.time() * 1000))), end=' ')
+    print(str(int(round(time.time() * 1000))), end=' ')
 
     get_picture("billede" + ".png", os.path.abspath("pictures"), scp)
     # billede gemt på computer
-    print(str(i) + "_" + str(int(round(time.time() * 1000))), end=' ')
+    print(str(int(round(time.time() * 1000))), end=' ')
 
 
 
@@ -103,6 +108,7 @@ def stop_belt_motors(m1, m2) :
 
 #Opdaterer Ev3'ens skærm med den angivne tekst
 def write_to_screen(text) :
+    display.clear()
     display.text_pixels(text, 0, 0, True, 'black', font=ev3_fonts.load('helvB24'))
     display.update()
 
@@ -118,23 +124,44 @@ def inf_check_for_object(inf, start_value) :
         write_to_screen('Der er ikke et object ' + str(inf.proximity))
         return False
 
+def move_one_step(targetposition, currentposition, engine):
+
+    if targetposition == currentposition:
+        return currentposition
+
+    elif targetposition > currentposition:
+        engine.on_for_rotations(speed=30, rotations=0.45)
+        currentposition = currentposition + 1
+        return move_one_step(targetposition, currentposition, engine)
+
+    elif targetposition < currentposition:
+        engine.on_for_rotations(speed=-30, rotations=0.45)
+        currentposition = currentposition - 1
+        return move_one_step(targetposition, currentposition, engine)
+
+
 
 def main() :
     print("cv2 version: " + cv2.__version__)
     scp = setup_ev3_ssh()
 
-    #belt_motor_one, belt_motor_two = initialize_motors()
-    #arm_motor = initialize_arm_motor()
+    belt_motor_one, belt_motor_two = initialize_belt_motors()
+    arm_motor = initialize_arm_motor()
     #inf, start_value = initialize_inf()
     ts = initialize_ts()
 
-    #run_motors(belt_motor_one, belt_motor_two, 0)
-
+    run_belt_motors(belt_motor_one, belt_motor_two, 0)
+    current_position = 2
+    print('Ready')
     while True :
         if ts.is_pressed :
             take_picture(scp)
-            random_number = random.randint(1, 3)
+            random_number = random.randint(1, 2)
             write_to_screen(str(random_number))
+            current_position = move_one_step(random_number, current_position, arm_motor)
+            ts.wait_for_released()
+
+
 
     #scp.close()
 
