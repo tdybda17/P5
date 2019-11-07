@@ -55,7 +55,7 @@ def get_train_data_gen(train_datagen):
 def get_test_data_gen(test_datagen):
     return test_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/test_data',
                                             target_size = (image_size_y, image_size_x),
-                                            batch_size = 32,
+                                            batch_size = batch_size,
                                             class_mode = 'categorical')
 
 
