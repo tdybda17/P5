@@ -3,8 +3,9 @@ from paramiko import SSHClient, AutoAddPolicy
 from scp import SCPClient
 import os
 import time
+import random
 
-#imports
+#imports for Ev3
 conn = rpyc.classic.connect('ev3dev')
 ev3_motor = conn.modules['ev3dev2.motor']
 ev3_sensor = conn.modules['ev3dev2.sensor.lego']
@@ -18,7 +19,7 @@ cv2 = conn.modules['cv2']
 print('Imports done')
 
 
-#initializations
+#initializations for Ev3
 webcam = cv2.VideoCapture(0)
 display = ev3_display.Display()
 
@@ -41,22 +42,28 @@ def setup_ev3_ssh() :
 
 #Henter billedet fra Ev3'en via en ssh forbindelse og ligger filen ind i mappen pictures i PyCharm
 def get_picture(picture_name, pc_path, scp) :
-    #scp.get("/home/robot/vscode-hello-python-master/billede/billede.png", "C:/Users/danny/PycharmProjects/P5/Ev3/pictures")
     scp.get("/home/robot/vscode-hello-python-master/billede/" + picture_name, pc_path)
 
 
 #Initializer og retunere de 2 motorer til båndet
-def initialize_motors() :
-    m1 = ev3_motor.LargeMotor('outA')
-    m2 = ev3_motor.LargeMotor('outB')
-    return m1, m2
+def initialize_belt_motors() :
+    belt_motor_one = ev3_motor.LargeMotor('outA')
+    belt_motor_two = ev3_motor.LargeMotor('outB')
+    return belt_motor_one, belt_motor_two
 
+def initialize_arm_motor() :
+    arm_motor = ev3_motor.MediumMotor('outC')
+    return arm_motor
 
 #initializer den infarøde sensor og retunere den samt dens første læste værdi
 def initialize_inf() :
     inf = ev3_sensor.InfraredSensor()
     start_value = inf.proximity
     return inf, start_value
+
+def initialize_ts() :
+    tf = ev3_sensor.TouchSensor()
+    return tf
 
 
 #Tager et billede og gemmer det på Ev3'en derefter bliver det flyttet over til computeren
@@ -84,12 +91,12 @@ def take_test_pictures(i, scp) :
 
 
 
-def run_motors(m1, m2, speed) :
+def run_belt_motors(m1, m2, speed) :
     m1.on(speed)
     m2.on(speed)
 
 
-def stop_motors(m1, m2) :
+def stop_belt_motors(m1, m2) :
     m1.on(0)
     m2.on(0)
 
@@ -116,21 +123,18 @@ def main() :
     print("cv2 version: " + cv2.__version__)
     scp = setup_ev3_ssh()
 
-    #m1, m2 = initialize_motors()
+    #belt_motor_one, belt_motor_two = initialize_motors()
+    #arm_motor = initialize_arm_motor()
     #inf, start_value = initialize_inf()
+    ts = initialize_ts()
 
-    #run_motors(m1, m2, 0)
-    #take_picture()
+    #run_motors(belt_motor_one, belt_motor_two, 0)
 
-    i = 0
     while True :
-        #start
-        print(str(i) + "_" + str(int(round(time.time() * 1000))), end=' ')
-        take_test_pictures(i, scp)
-
-        #slut
-        print(str(i) + "_" + str(int(round(time.time() * 1000))))
-        i += 1
+        if ts.is_pressed :
+            take_picture(scp)
+            random_number = random.randint(1, 3)
+            write_to_screen(str(random_number))
 
     #scp.close()
 
