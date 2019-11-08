@@ -17,9 +17,14 @@ classifier = Sequential()
 # Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is ReLu, which makes all negative
 # values in the matrix to zero.
-classifier.add(get_init_conv_layer(64, 3, 2)) # ned til 198 x 110
-classifier.add(get_conv_layer(64, 3, 2)) # ned til 198 x 110
+classifier.add(get_init_conv_layer(64, 3, 1)) # ned til 198 x 110
+classifier.add(get_conv_layer(64, 3, 1)) # ned til 198 x 110
+classifier.add(get_conv_layer(64, 3, 1)) # ned til 198 x 110
+classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
 
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 198 x 110
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 198 x 110
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 198 x 110
 classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
 
 # Flattening
@@ -27,7 +32,7 @@ classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 
 # Full connection
-classifier.add(get_dense_layer(1024))
+classifier.add(get_dense_layer(2048))
 
 classifier.add(get_dense_layer(2048))
 

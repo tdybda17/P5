@@ -9,37 +9,19 @@ from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_l
     get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
 
-model_plot_name = 'model7-deep-deep'
-model_name = 'Model7-deep-deep.h5'
+model_plot_name = 'model1'
+model_name = 'Model1.h5'
 
 
 classifier = Sequential()
 
 classifier.add(get_init_conv_layer(64, 3, 1))
-classifier.add(get_conv_layer(64, 3, 1))
-classifier.add(get_maxpool_layer(2))
-
-classifier.add(get_conv_layer(128, 3, 1))
-classifier.add(get_conv_layer(128, 3, 1))
-classifier.add(get_maxpool_layer(2))
-
-classifier.add(get_conv_layer(256, 3, 1))
-classifier.add(get_conv_layer(256, 3, 1))
-classifier.add(get_maxpool_layer(2))
-
-classifier.add(get_conv_layer(512, 3, 1))
-classifier.add(get_conv_layer(512, 3, 1))
-classifier.add(get_maxpool_layer(2))
-
-classifier.add(get_conv_layer(512, 3, 1))
-classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_maxpool_layer(2))
 
 classifier.add(Dropout(0.5))
 classifier.add(Flatten())
 
-classifier.add(get_dense_layer(2048))
-classifier.add(get_dense_layer(2048))
+classifier.add(get_dense_layer(512))
 classifier.add(Dense(activation="softmax", units=3))
 
 classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
@@ -55,5 +37,5 @@ test_set = get_test_data_gen(test_datagen)
 history = get_fit_generator(classifier, training_set, test_set)
 create_plot(history, model_plot_name)
 
-classifier.save(model_name)
+# classifier.save(model_name)
 K.clear_session()
