@@ -17,16 +17,22 @@ classifier = Sequential()
 # Convolution. Add a Convolution2D layer with 32 filters, 3x3 kernel size, 3 stride,
 # input shape of image should be 64x64x3 and the activation function is ReLu, which makes all negative
 # values in the matrix to zero.
-classifier.add(get_init_conv_layer(64, 4, 2)) # ned til 198 x 110
-classifier.add(get_conv_layer(64, 4, 2)) # ned til 198 x 110
+classifier.add(get_init_conv_layer(64, 3, 1)) # ned til 198 x 110
 classifier.add(get_maxpool_layer(2)) # ned til 99 x 55
 
-classifier.add(get_conv_layer(128, 4, 2)) # ned til 97 x 53
-classifier.add(get_conv_layer(128, 4, 2)) # ned til 97 x 53
+classifier.add(get_conv_layer(128, 3, 1)) # ned til 97 x 53
 classifier.add(get_maxpool_layer(2)) # ned til 48 x 26
 
-classifier.add(get_conv_layer(256, 4, 2)) # ned til 46 x 24
-classifier.add(get_conv_layer(256, 4, 2)) # ned til 46 x 24
+classifier.add(get_conv_layer(256, 3, 1)) # ned til 46 x 24
+classifier.add(get_maxpool_layer(2)) # ned til 23 x 12
+
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 46 x 24
+classifier.add(get_maxpool_layer(2)) # ned til 23 x 12
+
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 46 x 24
+classifier.add(get_maxpool_layer(2)) # ned til 23 x 12
+
+classifier.add(get_conv_layer(512, 3, 1)) # ned til 46 x 24
 classifier.add(get_maxpool_layer(2)) # ned til 23 x 12
 
 # Flattening
@@ -40,7 +46,7 @@ classifier.add(get_dense_layer(1024))
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
-classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
 
