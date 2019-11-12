@@ -5,8 +5,10 @@ import os
 import time
 import random
 
-#imports for Ev3
+#setup rpyc conn
 conn = rpyc.classic.connect('ev3dev')
+
+#imports for Ev3
 ev3_motor = conn.modules['ev3dev2.motor']
 ev3_sensor = conn.modules['ev3dev2.sensor.lego']
 ev3_os = conn.modules['os']
@@ -14,6 +16,7 @@ ev3_time = conn.modules['time']
 ev3_sys = conn.modules['sys']
 ev3_display = conn.modules['ev3dev2.display']
 ev3_fonts = conn.modules['ev3dev2.fonts']
+ev3_button = conn.modules['ev3dev2.button']
 cv2 = conn.modules['cv2']
 
 print('Imports done')
@@ -24,8 +27,8 @@ webcam = cv2.VideoCapture(0)
 webcam.set(3, 300)
 webcam.set(4, 300)
 
-
 display = ev3_display.Display()
+button = ev3_button.Button()
 
 print('initializations done')
 
@@ -130,12 +133,12 @@ def move_one_step(targetposition, currentposition, engine):
         return currentposition
 
     elif targetposition > currentposition:
-        engine.on_for_rotations(speed=30, rotations=0.45)
+        engine.on_for_rotations(speed=30, rotations=0.220)
         currentposition = currentposition + 1
         return move_one_step(targetposition, currentposition, engine)
 
     elif targetposition < currentposition:
-        engine.on_for_rotations(speed=-30, rotations=0.45)
+        engine.on_for_rotations(speed=-30, rotations=0.220)
         currentposition = currentposition - 1
         return move_one_step(targetposition, currentposition, engine)
 
@@ -145,23 +148,33 @@ def main() :
     print("cv2 version: " + cv2.__version__)
     scp = setup_ev3_ssh()
 
+    take_picture(scp)
+
     belt_motor_one, belt_motor_two = initialize_belt_motors()
     arm_motor = initialize_arm_motor()
     #inf, start_value = initialize_inf()
     ts = initialize_ts()
 
-    run_belt_motors(belt_motor_one, belt_motor_two, 0)
+    current_belt_motor_speed = -30
+    run_belt_motors(belt_motor_one, belt_motor_two, current_belt_motor_speed)
     current_position = 2
     print('Ready')
+
     while True :
         if ts.is_pressed :
             take_picture(scp)
-            random_number = random.randint(1, 2)
+            random_number = random.randint(1, 3)
             write_to_screen(str(random_number))
             current_position = move_one_step(random_number, current_position, arm_motor)
             ts.wait_for_released()
 
-
+        if button.any():
+            if current_belt_motor_speed == -30 :
+                run_belt_motors(belt_motor_one, belt_motor_two, 0)
+                current_belt_motor_speed = 0
+            else :
+                run_belt_motors(belt_motor_one, belt_motor_two, -30)
+                current_belt_motor_speed = -30
 
     #scp.close()
 
