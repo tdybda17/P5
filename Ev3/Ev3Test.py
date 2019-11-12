@@ -28,7 +28,7 @@ webcam.set(3, 300)
 webcam.set(4, 300)
 
 display = ev3_display.Display()
-button = ev3_button.Button()
+buttons = ev3_button.Button()
 
 print('initializations done')
 
@@ -168,7 +168,7 @@ def main() :
             current_position = move_one_step(random_number, current_position, arm_motor)
             ts.wait_for_released()
 
-        if button.any():
+        if buttons.any():
             if current_belt_motor_speed == -30 :
                 run_belt_motors(belt_motor_one, belt_motor_two, 0)
                 current_belt_motor_speed = 0
