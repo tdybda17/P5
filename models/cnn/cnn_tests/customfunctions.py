@@ -16,6 +16,7 @@ batch_size = 32
 test_size = len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg']))
 
 
+
 def get_init_conv_layer(filters, kernel, stride):
     return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3), activation='relu')
 
