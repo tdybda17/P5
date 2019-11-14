@@ -199,7 +199,7 @@ def main() :
             time.sleep(1)
             picture = image.load_img('pictures/billede.png', target_size=(190, 190))
             predict_array = predict_image(model, picture)
-            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
+            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
             current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
             print(predict_array)
             ts.wait_for_released()
