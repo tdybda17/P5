@@ -4,6 +4,9 @@ from scp import SCPClient
 import os
 import time
 import random
+from keras.models import load_model
+import numpy as np
+from keras.preprocessing import image
 
 #setup rpyc conn
 conn = rpyc.classic.connect('ev3dev')
@@ -50,6 +53,16 @@ def setup_ev3_ssh() :
 #Henter billedet fra Ev3'en via en ssh forbindelse og ligger filen ind i mappen pictures i PyCharm
 def get_picture(picture_name, pc_path, scp) :
     scp.get("/home/robot/vscode-hello-python-master/billede/" + picture_name, pc_path)
+
+
+def predict_image(model, picture) :
+    test_image = picture
+    test_image = image.img_to_array(test_image)
+    test_image = test_image / 255
+    test_image = np.expand_dims(test_image, axis = 0)
+    result = model.predict_proba(test_image)
+
+    return result[0]
 
 
 #Initializer og retunere de 2 motorer til båndet
@@ -112,7 +125,7 @@ def stop_belt_motors(m1, m2) :
 #Opdaterer Ev3'ens skærm med den angivne tekst
 def write_to_screen(text) :
     display.clear()
-    display.text_pixels(text, 0, 0, True, 'black', font=ev3_fonts.load('helvB24'))
+    display.text_pixels(text, 0, 0, False, 'black', font=ev3_fonts.load('helvB24'))
     display.update()
 
 
@@ -126,6 +139,14 @@ def inf_check_for_object(inf, start_value) :
     else :
         write_to_screen('Der er ikke et object ' + str(inf.proximity))
         return False
+
+def prediction_to_string(number) :
+    if number == 0 :
+        return 'Batteri'
+    if number == 1 :
+        return 'Dåse'
+    if number == 2 :
+        return 'Glas'
 
 def move_one_step(targetposition, currentposition, engine):
 
@@ -142,11 +163,21 @@ def move_one_step(targetposition, currentposition, engine):
         currentposition = currentposition - 1
         return move_one_step(targetposition, currentposition, engine)
 
+def get_higest_prediction_array_number(predictions) :
+    highest = max(predictions)
+
+    for x in range(len(predictions)) :
+        if predictions[x] == highest :
+            return x
 
 
 def main() :
     print("cv2 version: " + cv2.__version__)
     scp = setup_ev3_ssh()
+
+    print('Loading model........')
+    model = load_model('miModel/modeldeepenough.h5')
+    print('Model loaded')
 
     take_picture(scp)
 
@@ -155,17 +186,22 @@ def main() :
     #inf, start_value = initialize_inf()
     ts = initialize_ts()
 
-    current_belt_motor_speed = -30
+    current_belt_motor_speed = 0
     run_belt_motors(belt_motor_one, belt_motor_two, current_belt_motor_speed)
     current_position = 2
+
+    np.set_printoptions(suppress=True)
     print('Ready')
 
     while True :
         if ts.is_pressed :
             take_picture(scp)
-            random_number = random.randint(1, 3)
-            write_to_screen(str(random_number))
-            current_position = move_one_step(random_number, current_position, arm_motor)
+            time.sleep(1)
+            picture = image.load_img('pictures/billede.png', target_size=(190, 190))
+            predict_array = predict_image(model, picture)
+            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
+            current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
+            print(predict_array)
             ts.wait_for_released()
 
         if buttons.any():
