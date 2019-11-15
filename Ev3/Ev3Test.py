@@ -14,6 +14,7 @@ conn = rpyc.classic.connect('ev3dev')
 #imports for Ev3
 ev3_motor = conn.modules['ev3dev2.motor']
 ev3_sensor = conn.modules['ev3dev2.sensor.lego']
+ev3_sensor2 = conn.modules['ev3dev2.sensor']
 ev3_os = conn.modules['os']
 ev3_time = conn.modules['time']
 ev3_sys = conn.modules['sys']
@@ -21,6 +22,7 @@ ev3_display = conn.modules['ev3dev2.display']
 ev3_fonts = conn.modules['ev3dev2.fonts']
 ev3_button = conn.modules['ev3dev2.button']
 cv2 = conn.modules['cv2']
+
 
 print('Imports done')
 
@@ -85,6 +87,13 @@ def initialize_ts() :
     tf = ev3_sensor.TouchSensor()
     return tf
 
+def initialize_ultra_sonic_sensors() :
+    input1 = ev3_sensor2.INPUT_1
+    input2 = ev3_sensor2.INPUT_2
+    us1 = ev3_sensor.UltrasonicSensor(input1)
+    us2 = ev3_sensor.UltrasonicSensor(input2)
+    return us1, us2
+
 
 #Tager et billede og gemmer det på Ev3'en derefter bliver det flyttet over til computeren
 def take_picture(scp) :
@@ -93,9 +102,9 @@ def take_picture(scp) :
 
     check, frame = webcam.read()
     cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
-    print("Picture taken")
+    #print("Picture taken")
     get_picture("billede.png", os.path.abspath("pictures"), scp)
-    print("picture saved")
+    #print("picture saved")
 
 def take_test_pictures(i, scp) :
     for x in range(4):
@@ -170,6 +179,23 @@ def get_higest_prediction_array_number(predictions) :
         if predictions[x] == highest :
             return x
 
+def us_detection(us1, us2, us_buffer1, us_buffer2, buffer) :
+    disnow1 = us1.distance_centimeters
+    disnow2 = us2.distance_centimeters
+    if disnow1 > us_buffer1 + buffer or disnow1 < us_buffer1 - buffer or disnow2 > us_buffer2 + buffer or disnow2 < us_buffer2 - buffer :
+        return True
+
+def calibrate_us(us1, us2) :
+    us1buffer = 0
+    us2buffer = 0
+    # calibrate
+    for i in range(5):
+        us1buffer = us1.distance_centimeters
+        us2buffer = us2.distance_centimeters
+
+    print(us1buffer, us2buffer)
+
+    return us1buffer, us2buffer
 
 def main() :
     print("cv2 version: " + cv2.__version__)
@@ -181,10 +207,14 @@ def main() :
 
     take_picture(scp)
 
+    us1, us2 = initialize_ultra_sonic_sensors()
     belt_motor_one, belt_motor_two = initialize_belt_motors()
     arm_motor = initialize_arm_motor()
+
+    us_buffer1, us_buffer2 = calibrate_us(us1, us2)
+
+    #ts = initialize_ts()
     #inf, start_value = initialize_inf()
-    ts = initialize_ts()
 
     current_belt_motor_speed = 0
     run_belt_motors(belt_motor_one, belt_motor_two, current_belt_motor_speed)
@@ -192,17 +222,17 @@ def main() :
 
     np.set_printoptions(suppress=True)
     print('Ready')
-
+    print(us1.other_sensor_present, us2.other_sensor_present)
     while True :
-        if ts.is_pressed :
+        if us_detection(us1, us2, us_buffer1, us_buffer2, 2) :
+            time.sleep(0.5)
             take_picture(scp)
-            time.sleep(1)
             picture = image.load_img('pictures/billede.png', target_size=(190, 190))
             predict_array = predict_image(model, picture)
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
             current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
             print(predict_array)
-            ts.wait_for_released()
+            time.sleep(3)
 
         if buttons.any():
             if current_belt_motor_speed == -30 :
