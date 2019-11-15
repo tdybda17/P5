@@ -1,17 +1,26 @@
+import time
+
 from image_compressor.dir_walker.dir_walker import walk_dir
 from image_compressor.image_comp import compress_image
 
+
+def get_time():
+    return int(round(time.time() * 1000))
+
+
 __basedir__ = '/Users/toby/Desktop/'
-# [0] should not end with '/' and [1] is the name of the source and [2] is the type i.e training or test
-source_options = ['NyeBilleder/GlasTest', 'glas', 'test']
-
-source = __basedir__ + source_options[0]
+source = __basedir__ + 'old'  # Name of source dir
+dest_dir = 'new'  # Name of destination dir
 files = walk_dir(path=source, files_extensions=['.jpg', '.png', '.jpeg'])
-i = 0
+time_differences = []
 for file in files:
-    filename = __basedir__ + source_options[2] + '_' + source_options[1] + '/' + source_options[1] + '_' + str(i) + '_200x112.jpg'
-    compress_image(file, dest_filename=filename, size=[200, 112])
-    print(filename + ' was created')
-    i = i + 1
+    time_start = get_time()
+    filename = __basedir__ + dest_dir + '/' + 'glass_200x100.jpg'
+    compress_image(file, dest_filename=filename, size=[200, 100])
+    time_end = get_time()
+    time_differences.append([time_start, time_end])
+    break
 
-print('done')
+print(time_differences)
+
+
