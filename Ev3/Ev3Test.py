@@ -11,6 +11,7 @@ import cv2
 
 
 #setup rpyc conn
+from image_compressor.image_comp import compress_image
 conn = rpyc.classic.connect('ev3dev')
 
 #imports for Ev3
@@ -31,8 +32,8 @@ print('Imports done')
 
 #Webcam initialization
 webcam = cv2.VideoCapture(0)
-webcam.set(3, 300)
-webcam.set(4, 300)
+#webcam.set(3, 300)
+#webcam.set(4, 300)
 
 display = ev3_display.Display()
 buttons = ev3_button.Button()
@@ -207,12 +208,6 @@ def main() :
     model = load_model('miModel/modeldeepenough.h5')
     print('Model loaded')
 
-    #take_picture()
-    print('model')
-    picture = image.load_img('pictures/billede.jpg', target_size=(190, 190))
-    predict_array = predict_image(model, picture)
-    print(predict_array)
-    print('model output')
 
 
     us1, us2 = initialize_ultra_sonic_sensors()
@@ -230,12 +225,16 @@ def main() :
 
     np.set_printoptions(suppress=True)
 
+    take_picture()
+
+
     print(us1.other_sensor_present, us2.other_sensor_present)
     print('Ready')
     while True :
         if us_detection(us1, us2, us_buffer1, us_buffer2, 2) :
             time.sleep(0.5)
             take_picture()
+            compress_image(os.path.abspath('pictures/billede.jpg'), os.path.abspath('pictures/billede.jpg'), size=[200, 112])
             picture = image.load_img('pictures/billede.jpg', target_size=(190, 190))
             predict_array = predict_image(model, picture)
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
