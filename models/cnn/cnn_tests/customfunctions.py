@@ -38,9 +38,11 @@ def get_dense_layer(units):
 
 
 def get_fit_generator(classifier, trainingset, testset):
+    class_weight = {0: 1.75,
+                    1: 1.,
+                    2: 2.1}
     return classifier.fit_generator(trainingset,
-                             #steps_per_epoch=100,
-                             # integer, number of samples to process before starting a new epoch.
+                             class_weight=class_weight,
                              epochs=epochs,
                              validation_data=testset,
                              validation_steps= test_size // batch_size)  # number of samples to use from validation generator at the end of every epoch.
