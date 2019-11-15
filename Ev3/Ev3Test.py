@@ -7,6 +7,8 @@ import random
 from keras.models import load_model
 import numpy as np
 from keras.preprocessing import image
+import cv2
+
 
 #setup rpyc conn
 conn = rpyc.classic.connect('ev3dev')
@@ -21,13 +23,13 @@ ev3_sys = conn.modules['sys']
 ev3_display = conn.modules['ev3dev2.display']
 ev3_fonts = conn.modules['ev3dev2.fonts']
 ev3_button = conn.modules['ev3dev2.button']
-cv2 = conn.modules['cv2']
+#cv2 = conn.modules['cv2']
 
 
 print('Imports done')
 
 
-#initializations for Ev3
+#Webcam initialization
 webcam = cv2.VideoCapture(0)
 webcam.set(3, 300)
 webcam.set(4, 300)
@@ -96,14 +98,14 @@ def initialize_ultra_sonic_sensors() :
 
 
 #Tager et billede og gemmer det på Ev3'en derefter bliver det flyttet over til computeren
-def take_picture(scp) :
+def take_picture() :
     for x in range(4):
         check = webcam.grab()
 
     check, frame = webcam.read()
-    cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
+    cv2.imwrite(os.path.abspath("pictures/billede") + ".jpg", frame)
     #print("Picture taken")
-    get_picture("billede.png", os.path.abspath("pictures"), scp)
+    #get_picture("billede.png", os.path.abspath("pictures"), scp)
     #print("picture saved")
 
 def take_test_pictures(i, scp) :
@@ -198,14 +200,20 @@ def calibrate_us(us1, us2) :
     return us1buffer, us2buffer
 
 def main() :
-    print("cv2 version: " + cv2.__version__)
-    scp = setup_ev3_ssh()
+
+    #scp = setup_ev3_ssh()
 
     print('Loading model........')
     model = load_model('miModel/modeldeepenough.h5')
     print('Model loaded')
 
-    take_picture(scp)
+    #take_picture()
+    print('model')
+    picture = image.load_img('pictures/billede.jpg', target_size=(190, 190))
+    predict_array = predict_image(model, picture)
+    print(predict_array)
+    print('model output')
+
 
     us1, us2 = initialize_ultra_sonic_sensors()
     belt_motor_one, belt_motor_two = initialize_belt_motors()
@@ -221,13 +229,14 @@ def main() :
     current_position = 2
 
     np.set_printoptions(suppress=True)
-    print('Ready')
+
     print(us1.other_sensor_present, us2.other_sensor_present)
+    print('Ready')
     while True :
         if us_detection(us1, us2, us_buffer1, us_buffer2, 2) :
             time.sleep(0.5)
-            take_picture(scp)
-            picture = image.load_img('pictures/billede.png', target_size=(190, 190))
+            take_picture()
+            picture = image.load_img('pictures/billede.jpg', target_size=(190, 190))
             predict_array = predict_image(model, picture)
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
             current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
