@@ -100,8 +100,6 @@ def initialize_ultra_sonic_sensors() :
 
 #Tager et billede og gemmer det på Ev3'en derefter bliver det flyttet over til computeren
 def take_picture() :
-    for x in range(4):
-        check = webcam.grab()
 
     check, frame = webcam.read()
     cv2.imwrite(os.path.abspath("pictures/billede") + ".jpg", frame)
