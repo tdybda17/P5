@@ -9,8 +9,8 @@ from keras.preprocessing.image import ImageDataGenerator
 
 from image_compressor.dir_walker.dir_walker import walk_dir
 
-image_size_x = 150
-image_size_y = 150
+image_size_x = 190
+image_size_y = 190
 epochs = 20
 batch_size = 32
 test_size = len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg']))
@@ -22,7 +22,7 @@ def get_init_conv_layer(filters, kernel, stride):
 
 
 def get_conv_layer(filters, kernel, stride):
-    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu', padding='same')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu')#, padding='same')
 
 
 def get_maxpool_layer(size):
@@ -90,7 +90,7 @@ def create_plot(history, name):
     plt.plot(epochs, acc, 'bo', label='Training acc')
     # b is for "solid blue line"
     plt.plot(epochs, val_acc, 'b', label='Validation acc')
-    plt.title('Training and validation acc')
+    plt.title('Training and validation loss')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.ylim(0, 1)
