@@ -11,9 +11,9 @@ from image_compressor.dir_walker.dir_walker import walk_dir
 
 image_size_x = 190
 image_size_y = 190
-epochs = 20
+epochs = 10
 batch_size = 32
-test_size = len(walk_dir(path='../../../files/images/dataset-resized/test_data',files_extensions=['.jpg']))
+test_size = len(walk_dir(path='../../../images/dataset_1920x840/test',files_extensions=['.jpg']))
 
 
 
@@ -49,14 +49,14 @@ def get_fit_generator(classifier, trainingset, testset):
 
 
 def get_train_data_gen(train_datagen):
-    return train_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/training_data',
+    return train_datagen.flow_from_directory('../../../images/dataset_1920x840/training',
                                       target_size=(image_size_y, image_size_x),
                                       batch_size=batch_size,
                                       class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
-    return test_datagen.flow_from_directory('../../../files/images/dataset-resized/dataset-resized/test_data',
+    return test_datagen.flow_from_directory('../../../images/dataset_1920x840/test',
                                             target_size = (image_size_y, image_size_x),
                                             batch_size = batch_size,
                                             class_mode = 'categorical')

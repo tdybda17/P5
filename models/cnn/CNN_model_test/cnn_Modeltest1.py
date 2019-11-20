@@ -43,7 +43,7 @@ classifier.add(get_dense_layer(2048))
 classifier.add(Dense(activation="softmax", units=3))
 
 # Compiling the CNN
-classifier.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Part 2 - Fitting the CNN to the images
 
