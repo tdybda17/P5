@@ -1,3 +1,4 @@
+import numpy
 import rpyc
 from paramiko import SSHClient, AutoAddPolicy
 from scp import SCPClient
@@ -31,9 +32,9 @@ print('Imports done')
 
 
 #Webcam initialization
-webcam = cv2.VideoCapture(0)
-#webcam.set(3, 300)
-#webcam.set(4, 300)
+webcam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 
 display = ev3_display.Display()
 buttons = ev3_button.Button()
@@ -61,8 +62,9 @@ def get_picture(picture_name, pc_path, scp) :
 
 
 def predict_image(model, picture) :
-    test_image = picture
-    test_image = image.img_to_array(test_image)
+    resized = cv2.resize(picture, (190, 190), interpolation=cv2.INTER_AREA)
+    test_image = resized
+    #test_image = image.img_to_array(test_image)
     test_image = test_image / 255
     test_image = np.expand_dims(test_image, axis = 0)
     result = model.predict_proba(test_image)
@@ -203,7 +205,7 @@ def main() :
     #scp = setup_ev3_ssh()
 
     print('Loading model........')
-    model = load_model('miModel/modeldeepenough.h5')
+    model = load_model('miModel/test.h5')
     print('Model loaded')
 
 
@@ -230,15 +232,26 @@ def main() :
     print('Ready')
     while True :
         if us_detection(us1, us2, us_buffer1, us_buffer2, 2) :
+            print(us1.distance_centimeters)
+            print(us2.distance_centimeters)
+            print('Buffer = ' + str(us_buffer1))
+            print('Buffer = ' + str(us_buffer2))
             time.sleep(0.5)
-            take_picture()
-            compress_image(os.path.abspath('pictures/billede.jpg'), os.path.abspath('pictures/billede.jpg'), size=[200, 112])
-            picture = image.load_img('pictures/billede.jpg', target_size=(190, 190))
+            #check = webcam.grab()
+            #check = webcam.grab()
+            webcam.read()
+            check, frame = webcam.read()
+            cv2.imwrite(os.path.abspath("pictures/billede") + ".jpg", frame)
+            picture = numpy.array(frame[120:960, :])
+            #take_picture()
+            #compress_image(os.path.abspath('pictures/billede.jpg'), os.path.abspath('pictures/billede.jpg'), size=[200, 112])
+            #picture = image.load_img('pictures/billede.jpg', target_size=(190, 190))
             predict_array = predict_image(model, picture)
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
             current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
             print(predict_array)
-            time.sleep(3)
+            time.sleep(6)
+            current_position = move_one_step(2, current_position, arm_motor)
 
         if buttons.any():
             if current_belt_motor_speed == -30 :
