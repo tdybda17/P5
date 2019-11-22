@@ -72,19 +72,6 @@ def take_picture() :
 
     return frame
 
-
-def take_test_pictures(i, scp) :
-    for x in range(4):
-        check = webcam.grab()
-
-    check, frame = webcam.read()
-    cv2.imwrite("/home/robot/vscode-hello-python-master/billede/billede" + ".png", frame)
-    #Gemt på Ev3
-    print(str(int(round(time.time() * 1000))), end=' ')
-
-    # billede gemt på computer
-    print(str(int(round(time.time() * 1000))), end=' ')
-
 def run_belt_motors(m1, m2, speed) :
     m1.on(speed)
     m2.on(speed)
@@ -208,7 +195,6 @@ def main() :
             else :
                 run_belt_motors(belt_motor_one, belt_motor_two, running_belt_motor_speed)
                 current_belt_motor_speed = running_belt_motor_speed
-
 
 
 if __name__ == '__main__':
