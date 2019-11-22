@@ -1,4 +1,3 @@
-
 from keras.models import Sequential
 from keras.layers import Convolution2D, Dropout
 from keras.layers import MaxPooling2D
@@ -10,15 +9,12 @@ from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_l
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
 from keras.applications import VGG19
 
-
 conv_base = VGG19(weights='imagenet',
-include_top=False,
-input_shape=(150, 150, 3))
+                  include_top=False,
+                  input_shape=(150, 150, 3))
 
-
-model_plot_name = 'pretrained_cnn_Adam'
-model_name = 'pretrained_cnn_Adam.h5'
-
+model_plot_name = 'ptcnn_2'
+model_name = 'ptcnn_2.h5'
 
 classifier = Sequential()
 
@@ -32,8 +28,7 @@ classifier.add(Dense(activation="softmax", units=3))
 
 conv_base.trainable = False
 
-classifier.compile(optimizer = 'Adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
-
+classifier.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
 train_datagen = get_image_data_gen()
 
