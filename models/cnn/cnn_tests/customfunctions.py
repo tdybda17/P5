@@ -9,9 +9,9 @@ from keras.preprocessing.image import ImageDataGenerator
 
 from image_compressor.dir_walker.dir_walker import walk_dir
 
-image_size_x = 190
-image_size_y = 190
-epochs = 10
+image_size_x = 150
+image_size_y = 150
+epochs = 100
 batch_size = 32
 test_size = len(walk_dir(path='../../../images/dataset_1920x840/test',files_extensions=['.jpg']))
 
@@ -22,7 +22,7 @@ def get_init_conv_layer(filters, kernel, stride):
 
 
 def get_conv_layer(filters, kernel, stride):
-    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu')#, padding='same')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, activation='relu', padding='same')
 
 
 def get_maxpool_layer(size):
@@ -38,9 +38,9 @@ def get_dense_layer(units):
 
 
 def get_fit_generator(classifier, trainingset, testset):
-    class_weight = {0: 1.75,
+    class_weight = {0: 1.92,
                     1: 1.,
-                    2: 2.1}
+                    2: 2.24}
     return classifier.fit_generator(trainingset,
                              class_weight=class_weight,
                              epochs=epochs,
