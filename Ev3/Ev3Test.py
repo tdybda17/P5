@@ -208,15 +208,15 @@ def main() :
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
             current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
 
-
-        if buttons.any() :
-            current_position = move_one_step(2, current_position, arm_motor)
+        if buttons.up :
             if current_belt_motor_speed == running_belt_motor_speed :
                 stop_belt_motors(belt_motor_one, belt_motor_two)
                 current_belt_motor_speed = 0
             else :
                 run_belt_motors(belt_motor_one, belt_motor_two, running_belt_motor_speed)
                 current_belt_motor_speed = running_belt_motor_speed
+        if buttons.down :
+            current_position = move_one_step(2, current_position, arm_motor)
 
 
 if __name__ == '__main__':
