@@ -191,7 +191,6 @@ def main() :
 
     take_picture()
 
-
     print(us1.other_sensor_present, us2.other_sensor_present)
     print('Ready')
     while True :
