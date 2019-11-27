@@ -10,7 +10,6 @@ import numpy as np
 from keras.preprocessing import image
 import cv2
 
-
 #setup rpyc conn
 from image_compressor.image_comp import compress_image
 conn = rpyc.classic.connect('ev3dev')
@@ -68,7 +67,13 @@ def initialize_ultra_sonic_sensors() :
 def take_picture() :
     webcam.read()
     check, frame = webcam.read()
-    cv2.imwrite(os.path.abspath("pictures/billede") + ".jpg", frame)
+
+    return frame
+
+def take_and_save_picture(picture_name) :
+    webcam.read()
+    check, frame = webcam.read()
+    cv2.imwrite(os.path.abspath("pictures") + '/' + picture_name + ".jpg", frame)
 
     return frame
 
@@ -132,6 +137,7 @@ def us_detection(us1, us2, us_buffer1, us_buffer2, buffer) :
     if disnow1 > us_buffer1 + buffer or disnow1 < us_buffer1 - buffer or disnow2 > us_buffer2 + buffer or disnow2 < us_buffer2 - buffer :
         return True
 
+
 def calibrate_us(us1, us2) :
     us1buffer = 0
     us2buffer = 0
@@ -143,6 +149,26 @@ def calibrate_us(us1, us2) :
     print(us1buffer, us2buffer)
 
     return us1buffer, us2buffer
+
+def take_multiple_pictures(number_of_pictures, time_between_pictures) :
+    pictures = []
+    for x in range(number_of_pictures) :
+        frame = take_and_save_picture('billede' + str(x))
+        pictures.append(frame)
+        time.sleep(time_between_pictures)
+    return pictures
+
+def get_prediction_from_multiple_pictures(pictures, model) :
+    prediction_array = [0, 0, 0]
+    for x in range(len(pictures)) :
+        picture = numpy.array(pictures[x][120:960, :])
+        i = predict_image(model, picture)
+        prediction_array[0] += i[0]
+        prediction_array[1] += i[1]
+        prediction_array[2] += i[2]
+        print(i)
+
+    return prediction_array
 
 def main() :
     print('Loading model........')
@@ -174,27 +200,22 @@ def main() :
             print('Buffer = ' + str(us_buffer1))
             print('Buffer = ' + str(us_buffer2))
 
-            time.sleep(0.5)
-
-            frame = take_picture()
-
-            picture = numpy.array(frame[120:960, :])
-            predict_array = predict_image(model, picture)
-            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
-            current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
+            pictures = take_multiple_pictures(7, 0.1)
+            predict_array = get_prediction_from_multiple_pictures(pictures, model)
             print(predict_array)
 
-            time.sleep(6)
+            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
+            current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
 
-            current_position = move_one_step(2, current_position, arm_motor)
-
-        if buttons.any() :
+        if buttons.up :
             if current_belt_motor_speed == running_belt_motor_speed :
                 stop_belt_motors(belt_motor_one, belt_motor_two)
                 current_belt_motor_speed = 0
             else :
                 run_belt_motors(belt_motor_one, belt_motor_two, running_belt_motor_speed)
                 current_belt_motor_speed = running_belt_motor_speed
+        if buttons.down :
+            current_position = move_one_step(2, current_position, arm_motor)
 
 
 if __name__ == '__main__':
