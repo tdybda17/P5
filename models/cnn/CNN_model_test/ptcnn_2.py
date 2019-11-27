@@ -13,7 +13,7 @@ conv_base = VGG19(weights='imagenet',
                   include_top=False,
                   input_shape=(150, 150, 3))
 
-model_plot_name = 'ptcnn_2'
+graph_name = 'ptcnn_2'
 model_name = 'ptcnn_2.h5'
 
 classifier = Sequential()
@@ -41,5 +41,5 @@ test_set = get_test_data_gen(test_datagen)
 history = get_fit_generator(classifier, training_set, test_set)
 create_plot(history, model_plot_name)
 
-classifier.save(model_name)
+#classifier.save(model_name)
 K.clear_session()

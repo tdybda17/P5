@@ -13,12 +13,13 @@ image_size_x = 150
 image_size_y = 150
 epochs = 50
 batch_size = 32
-test_size = len(walk_dir(path='../../../images/dataset_1920x840/test',files_extensions=['.jpg']))
-
+test_size = len(walk_dir(path='../../../images/dataset_1920x840/test', files_extensions=['.jpg']))
+images_dir = "dataset_1920x840"
 
 
 def get_init_conv_layer(filters, kernel, stride):
-    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3), activation='relu')
+    return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3),
+                  activation='relu')
 
 
 def get_conv_layer(filters, kernel, stride):
@@ -42,37 +43,37 @@ def get_fit_generator(classifier, trainingset, testset):
                     1: 1.,
                     2: 2.24}
     return classifier.fit_generator(trainingset,
-                             class_weight=class_weight,
-                             epochs=epochs,
-                             validation_data=testset,
-                             validation_steps= test_size // batch_size)  # number of samples to use from validation generator at the end of every epoch.
+                                    class_weight=class_weight,
+                                    epochs=epochs,
+                                    validation_data=testset,
+                                    validation_steps=test_size // batch_size)  # number of samples to use from validation generator at the end of every epoch.
 
 
 def get_train_data_gen(train_datagen):
     return train_datagen.flow_from_directory('../../../images/dataset_1920x840/training',
-                                      target_size=(image_size_y, image_size_x),
-                                      batch_size=batch_size,
-                                      class_mode='categorical')
+                                             target_size=(image_size_y, image_size_x),
+                                             batch_size=batch_size,
+                                             class_mode='categorical')
 
 
 def get_test_data_gen(test_datagen):
     return test_datagen.flow_from_directory('../../../images/dataset_1920x840/test',
-                                            target_size = (image_size_y, image_size_x),
-                                            batch_size = batch_size,
-                                            class_mode = 'categorical')
+                                            target_size=(image_size_y, image_size_x),
+                                            batch_size=batch_size,
+                                            class_mode='categorical')
 
 
 def get_image_data_gen():
-    return ImageDataGenerator(rescale=1./255,
-                                rotation_range=40,
-                                width_shift_range=0.2,
-                                height_shift_range=0.2,
-                                shear_range=0.2,
-                                horizontal_flip=True)
+    return ImageDataGenerator(rescale=1. / 255,
+                              rotation_range=40,
+                              width_shift_range=0.2,
+                              height_shift_range=0.2,
+                              shear_range=0.2,
+                              horizontal_flip=True)
 
 
 def get_rescale_gen():
-    return ImageDataGenerator(rescale = 1./255)
+    return ImageDataGenerator(rescale=1. / 255)
 
 
 def create_plot(history, name):
@@ -90,11 +91,9 @@ def create_plot(history, name):
     plt.plot(epochs, acc, 'bo', label='Training acc')
     # b is for "solid blue line"
     plt.plot(epochs, val_acc, 'b', label='Validation acc')
-    plt.title('Training and validation loss')
+    plt.title('Training and validation acc')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.ylim(0, 1)
     plt.legend()
     plt.savefig(name)
-
-
