@@ -202,7 +202,7 @@ def main() :
 
             pictures = take_multiple_pictures(7, 0.1)
             predict_array = get_prediction_from_multiple_pictures(pictures, model)
-            print(predict_array)
+            print('\n' + predict_array)
 
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
             current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
