@@ -8,8 +8,8 @@ from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_l
     get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
 
-graph_name = "cnn_1ave2"
-model_name = "cnn_1ave2.h5"
+graph_name = "cnn_72"
+model_name = "cnn_7.h5"
 
 classifier = Sequential()
 
@@ -34,7 +34,7 @@ classifier.add(Flatten())
 classifier.add(get_dense_layer(2048))
 
 classifier.add(Dense(activation="softmax", units=3))
-adam = optimizers.Adam(learning_rate=0.002)
+adam = optimizers.Adam(learning_rate=0.001)
 classifier.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
 train_datagen = get_image_data_gen()

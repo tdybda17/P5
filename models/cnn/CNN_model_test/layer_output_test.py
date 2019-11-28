@@ -5,25 +5,23 @@ import matplotlib.pyplot as plt
 from keras import models
 from keras.preprocessing import image
 
-model = models.load_model('modeldeepenough.h5')
+model = models.load_model('cnn_1ave.h5')
 
 np.set_printoptions(suppress=True)
-img = image.load_img('../../../files/images/dataset-resized/dataset-resized/test_data/Dåser/can1_31_200x112.jpg', target_size=(190, 190))
+img = image.load_img('../../../images/dataset_1920x840/test/cans/cans_362_1920x840.jpg', target_size=(150, 150))
 test_image = image.img_to_array(img)
-test_image = test_image/255
-test_image = np.expand_dims(test_image, axis = 0)
+test_image = test_image / 255
+test_image = np.expand_dims(test_image, axis=0)
 result = model.predict_proba(test_image)
 
 print(result[0])
 
-
-
-layer_outputs = [layer.output for layer in model.layers[:12]]
-activation_model = models.Model(inputs = model.input, outputs = layer_outputs)
+layer_outputs = [layer.output for layer in model.layers[:10]]
+activation_model = models.Model(inputs=model.input, outputs=layer_outputs)
 activations = activation_model.predict(test_image)
 
 layer_names = []
-for layer in model.layers[:12]:
+for layer in model.layers[:10]:
     layer_names.append(layer.name)
 
 images_per_row = 16
@@ -56,5 +54,3 @@ for layer_name, layer_activation in zip(layer_names, activations):
     plt.grid(False)
     plt.imshow(display_grid, aspect='auto', cmap='viridis')
     plt.show()
-
-
