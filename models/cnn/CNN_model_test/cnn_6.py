@@ -5,10 +5,11 @@ from keras.layers import Flatten
 from keras.layers import Dense
 from keras import backend as K, optimizers
 from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_layer, \
-    get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot, get_fit_generator, \
+    get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot_acc, create_plot_loss, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
 
-graph_name = "cnn_6"
+graph_acc_name = "cnn_6_acc"
+graph_loss_name = "cnn_6_loss"
 model_name = "cnn_6.h5"
 
 classifier = Sequential()
@@ -46,7 +47,8 @@ training_set = get_train_data_gen(train_datagen)
 test_set = get_test_data_gen(test_datagen)
 
 history = get_fit_generator(classifier, training_set, test_set)
-create_plot(history, graph_name)
+create_plot_acc(history, graph_acc_name)
+create_plot_loss(history, graph_loss_name)
 
 # classifier.save(model_name)
 K.clear_session()
