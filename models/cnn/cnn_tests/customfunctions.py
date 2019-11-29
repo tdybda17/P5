@@ -11,7 +11,7 @@ from image_compressor.dir_walker.dir_walker import walk_dir
 
 image_size_x = 150
 image_size_y = 150
-epochs = 50
+epochs = 5
 batch_size = 32
 test_size = len(walk_dir(path='../../../images/dataset_1920x840/test', files_extensions=['.jpg']))
 images_dir = "dataset_1920x840"
@@ -76,24 +76,42 @@ def get_rescale_gen():
     return ImageDataGenerator(rescale=1. / 255)
 
 
-def create_plot(history, name):
+def create_plot_acc(history, name):
     history_dict = history.history
     history_dict.keys()
 
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
 
     epochs = range(1, len(acc) + 1)
     plt.clf()
     # "bo" is for "blue dot"
-    plt.plot(epochs, acc, 'bo', label='Training acc')
+    plt.plot(epochs, acc, 'bo', label='Training accuracy')
     # b is for "solid blue line"
-    plt.plot(epochs, val_acc, 'b', label='Validation acc')
-    plt.title('Training and validation acc')
+    plt.plot(epochs, val_acc, 'b', label='Validation accuracy')
+    plt.title('Training and validation accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.ylim(0, 1)
+    plt.legend()
+    plt.savefig(name)
+
+
+def create_plot_loss(history, name):
+    history_dict = history.history
+    history_dict.keys()
+
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+
+    epochs = range(1, len(loss) + 1)
+    plt.clf()
+    # "bo" is for "blue dot"
+    plt.plot(epochs, loss, 'bo', label='Training loss')
+    # b is for "solid blue line"
+    plt.plot(epochs, val_loss, 'b', label='Validation loss')
+    plt.title('Training and validation loss')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
-    plt.ylim(0, 1)
     plt.legend()
     plt.savefig(name)
