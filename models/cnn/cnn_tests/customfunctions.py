@@ -14,7 +14,6 @@ image_size_y = 150
 epochs = 50
 batch_size = 32
 test_size = len(walk_dir(path='../../../images/dataset_1920x840/test', files_extensions=['.jpg']))
-images_dir = "dataset_1920x840"
 
 
 def get_init_conv_layer(filters, kernel, stride):
