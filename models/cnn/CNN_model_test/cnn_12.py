@@ -3,14 +3,14 @@ from keras.layers import Convolution2D, Dropout
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
-from keras import backend as K
+from keras import backend as K, optimizers
 from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_layer, \
     get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot_acc, create_plot_loss, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
 
-graph_acc_name = "cnn_3_acc"
-graph_loss_name = "cnn_3_loss"
-model_name = "cnn_3.h5"
+graph_acc_name = "cnn_12_acc"
+graph_loss_name = "cnn_12_loss"
+model_name = "cnn_12.h5"
 
 classifier = Sequential()
 
@@ -29,14 +29,14 @@ classifier.add(get_maxpool_layer(2))
 classifier.add(get_conv_layer(512, 3, 1))
 classifier.add(get_maxpool_layer(2))
 
-classifier.add(Dropout(0.5))
+classifier.add(Dropout(0.7))
 classifier.add(Flatten())
 
 classifier.add(get_dense_layer(2048))
 
 classifier.add(Dense(activation="softmax", units=3))
-
-classifier.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+adam = optimizers.Adam(learning_rate=0.00025)
+classifier.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
 train_datagen = get_image_data_gen()
 
