@@ -110,7 +110,7 @@ def prediction_to_string(number) :
     if number == 2 :
         return 'Glas'
 
-def move_one_step(targetposition, currentposition, engine):
+def move_one_step(targetposition, currentposition, engine) :
     if targetposition == currentposition:
         return currentposition
 
@@ -204,8 +204,8 @@ def main() :
             predict_array = get_prediction_from_multiple_pictures(pictures, model)
             print(predict_array)
 
-            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
-            current_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_position, arm_motor)
+            write_to_screen(prediction_to_string(max(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
+            current_position = move_one_step((max(predict_array) + 1), current_position, arm_motor)
 
         if buttons.up :
             if current_belt_motor_speed == running_belt_motor_speed :

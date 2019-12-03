@@ -1,3 +1,4 @@
+keras
 scp
 paramiko
 rpyc==3.3.0
