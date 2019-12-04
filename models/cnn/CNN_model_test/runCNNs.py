@@ -1,9 +1,10 @@
 import runpy
 
 
-runpy.run_path('cnn_19.py')
-runpy.run_path('cnn_20.py')
-runpy.run_path('cnn_21.py')
-runpy.run_path('cnn_22.py')
-runpy.run_path('cnn_23.py')
-runpy.run_path('cnn_24.py')
+runpy.run_path('cnn_28.py')
+runpy.run_path('cnn_29.py')
+runpy.run_path('cnn_30.py')
+runpy.run_path('cnn_31.py')
+runpy.run_path('cnn_32.py')
+runpy.run_path('cnn_33.py')
+runpy.run_path('cnn_9.py')
