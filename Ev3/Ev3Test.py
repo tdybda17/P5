@@ -38,9 +38,7 @@ buttons = ev3_button.Button()
 print('initializations done')
 
 def predict_image(model, picture) :
-    resized = cv2.resize(picture, (190, 190), interpolation=cv2.INTER_AREA)
-    test_image = resized
-    #test_image = image.img_to_array(test_image)
+    test_image = cv2.resize(picture, (190, 190), interpolation=cv2.INTER_AREA)
     test_image = test_image / 255
     test_image = np.expand_dims(test_image, axis = 0)
     result = model.predict_proba(test_image)
@@ -171,9 +169,7 @@ def get_prediction_from_multiple_pictures(pictures, model) :
     return prediction_array
 
 def main() :
-    print('Loading model........')
     model = load_model('miModel/modeldeepenough.h5')
-    print('Model loaded')
 
     us1, us2 = initialize_ultra_sonic_sensors()
     belt_motor_one, belt_motor_two = initialize_belt_motors()
@@ -185,7 +181,7 @@ def main() :
     running_belt_motor_speed = -30
     run_belt_motors(belt_motor_one, belt_motor_two, current_belt_motor_speed)
 
-    current_position = 2
+    current_arm_position = 2
 
     np.set_printoptions(suppress=True)
 
@@ -204,8 +200,8 @@ def main() :
             predict_array = get_prediction_from_multiple_pictures(pictures, model)
             print(predict_array)
 
-            write_to_screen(prediction_to_string(max(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
-            current_position = move_one_step((max(predict_array) + 1), current_position, arm_motor)
+            write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
+            current_arm_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_arm_position, arm_motor)
 
         if buttons.up :
             if current_belt_motor_speed == running_belt_motor_speed :
@@ -215,7 +211,7 @@ def main() :
                 run_belt_motors(belt_motor_one, belt_motor_two, running_belt_motor_speed)
                 current_belt_motor_speed = running_belt_motor_speed
         if buttons.down :
-            current_position = move_one_step(2, current_position, arm_motor)
+            current_arm_position = move_one_step(2, current_arm_position, arm_motor)
 
 
 if __name__ == '__main__':
