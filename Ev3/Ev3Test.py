@@ -196,7 +196,7 @@ def main() :
             print('Buffer = ' + str(us_buffer1))
             print('Buffer = ' + str(us_buffer2))
 
-            pictures = take_multiple_pictures(7, 0.1)
+            pictures = take_multiple_pictures(5, 0.1)
             predict_array = get_prediction_from_multiple_pictures(pictures, model)
             print(predict_array)
 
