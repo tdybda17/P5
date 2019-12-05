@@ -185,7 +185,10 @@ def main() :
 
     np.set_printoptions(suppress=True)
 
-    take_picture()
+    first_picture = take_picture()
+
+    picture = numpy.array(first_picture[120:960, :])
+    i = predict_image(model, picture)
 
     print(us1.other_sensor_present, us2.other_sensor_present)
     print('Ready')
@@ -198,6 +201,7 @@ def main() :
 
             pictures = take_multiple_pictures(5, 0.1)
             predict_array = get_prediction_from_multiple_pictures(pictures, model)
+            print(prediction_to_string(get_higest_prediction_array_number(predict_array)))
             print(predict_array)
 
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
