@@ -188,7 +188,7 @@ def main() :
     first_picture = take_picture()
 
     picture = numpy.array(first_picture[120:960, :])
-    i = predict_image(model, picture)
+    first_prediction = predict_image(model, picture)
 
     print(us1.other_sensor_present, us2.other_sensor_present)
     print('Ready')
