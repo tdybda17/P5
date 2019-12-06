@@ -113,9 +113,15 @@ def move_arm(targetposition, currentposition, engine) :
     if currentposition == targetposition :
         return currentposition
     elif currentposition < targetposition :
+        if currentposition + 1 < targetposition :
+            engine.on_for_rotations(speed=30, rotations=0.440)
+            return currentposition + 2
         engine.on_for_rotations(speed=30, rotations=0.220)
         return currentposition + 1
     else :
+        if currentposition - 1 > targetposition :
+            engine.on_for_rotations(speed=-30, rotations=0.440)
+            return currentposition - 2
         engine.on_for_rotations(speed=-30, rotations=0.220)
         return currentposition - 1
 
