@@ -3,7 +3,7 @@ from keras.layers import Convolution2D, Dropout
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
-from keras import backend as K
+from keras import backend as K, optimizers
 from models.cnn.cnn_tests.customfunctions import get_init_conv_layer, get_conv_layer, \
     get_maxpool_layer, get_dropout_layer, get_dense_layer, create_plot_acc, create_plot_loss, get_fit_generator, \
     get_train_data_gen, get_test_data_gen, get_image_data_gen, get_rescale_gen
@@ -35,8 +35,8 @@ classifier.add(Flatten())
 classifier.add(get_dense_layer(2048))
 
 classifier.add(Dense(activation="softmax", units=3))
-
-classifier.compile(optimizer='SGD', loss='categorical_crossentropy', metrics=['accuracy'])
+sgd = optimizers.SGD(momentum=0.9)
+classifier.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
 
 train_datagen = get_image_data_gen()
 
