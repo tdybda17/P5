@@ -108,19 +108,24 @@ def prediction_to_string(number) :
     if number == 2 :
         return 'Glas'
 
-def move_one_step(targetposition, currentposition, engine) :
-    if targetposition == currentposition:
+def move_arm(targetposition, currentposition, engine) :
+
+    if currentposition == targetposition :
         return currentposition
 
-    elif targetposition > currentposition:
+    elif currentposition < targetposition :
+        if currentposition + 1 < targetposition :
+            engine.on_for_rotations(speed=30, rotations=0.440)
+            return currentposition + 2
         engine.on_for_rotations(speed=30, rotations=0.220)
-        currentposition = currentposition + 1
-        return move_one_step(targetposition, currentposition, engine)
-
-    elif targetposition < currentposition:
+        return currentposition + 1
+    else :
+        if currentposition - 1 > targetposition :
+            engine.on_for_rotations(speed=-30, rotations=0.440)
+            return currentposition - 2
         engine.on_for_rotations(speed=-30, rotations=0.220)
-        currentposition = currentposition - 1
-        return move_one_step(targetposition, currentposition, engine)
+        return currentposition - 1
+
 
 def get_higest_prediction_array_number(predictions) :
     highest = max(predictions)
@@ -188,10 +193,12 @@ def main() :
     first_picture = take_picture()
 
     picture = numpy.array(first_picture[120:960, :])
-    i = predict_image(model, picture)
+    first_prediction = predict_image(model, picture)
 
     print(us1.other_sensor_present, us2.other_sensor_present)
     print('Ready')
+
+
     while True :
         if us_detection(us1, us2, us_buffer1, us_buffer2, 2) :
             print(us1.distance_centimeters)
@@ -199,13 +206,14 @@ def main() :
             print('Buffer = ' + str(us_buffer1))
             print('Buffer = ' + str(us_buffer2))
 
+
             pictures = take_multiple_pictures(5, 0.1)
             predict_array = get_prediction_from_multiple_pictures(pictures, model)
             print(prediction_to_string(get_higest_prediction_array_number(predict_array)))
             print(predict_array)
 
             write_to_screen(prediction_to_string(get_higest_prediction_array_number(predict_array)) + '\n\n' + str(predict_array[0]) + '\n' + str(predict_array[1]) + '\n' + str(predict_array[2]))
-            current_arm_position = move_one_step((get_higest_prediction_array_number(predict_array) + 1), current_arm_position, arm_motor)
+            current_arm_position = move_arm(get_higest_prediction_array_number(predict_array) + 1, current_arm_position , arm_motor)
 
         if buttons.up :
             if current_belt_motor_speed == running_belt_motor_speed :
@@ -215,7 +223,7 @@ def main() :
                 run_belt_motors(belt_motor_one, belt_motor_two, running_belt_motor_speed)
                 current_belt_motor_speed = running_belt_motor_speed
         if buttons.down :
-            current_arm_position = move_one_step(2, current_arm_position, arm_motor)
+            current_arm_position = move_arm(2, current_arm_position, arm_motor)
 
 
 if __name__ == '__main__':
