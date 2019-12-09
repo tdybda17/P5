@@ -18,7 +18,7 @@ test_size = len(walk_dir(path='../../../images/dataset_1920x840/test', files_ext
 
 def get_init_conv_layer(filters, kernel, stride):
     return Conv2D(filters=filters, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3),
-                  activation='relu')
+                  activation='relu', padding='same')
 
 
 def get_conv_layer(filters, kernel, stride):
