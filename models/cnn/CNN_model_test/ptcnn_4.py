@@ -31,7 +31,7 @@ classifier.add(get_dense_layer(4096))
 
 classifier.add(Dropout(0.5))
 
-classifier.add(get_dense_layer(128))
+classifier.add(get_dense_layer(2048))
 
 classifier.add(Dense(activation="softmax", units=3))
 
