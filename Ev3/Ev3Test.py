@@ -37,7 +37,8 @@ buttons = ev3_button.Button()
 
 print('initializations done')
 
-def predict_image(model, picture) :
+
+def predict_image(model, picture):
     test_image = cv2.resize(picture, (190, 190), interpolation=cv2.INTER_AREA)
     test_image = test_image / 255
     test_image = np.expand_dims(test_image, axis = 0)
@@ -45,52 +46,61 @@ def predict_image(model, picture) :
 
     return result[0]
 
+
 #Initializer og retunere de 2 motorer til båndet
-def initialize_belt_motors() :
+def initialize_belt_motors():
     belt_motor_one = ev3_motor.LargeMotor('outA')
     belt_motor_two = ev3_motor.LargeMotor('outB')
     return belt_motor_one, belt_motor_two
 
-def initialize_arm_motor() :
+
+def initialize_arm_motor():
     arm_motor = ev3_motor.MediumMotor('outC')
     return arm_motor
 
-def initialize_ultra_sonic_sensors() :
+
+def initialize_ultra_sonic_sensors():
     input1 = ev3_sensor2.INPUT_1
     input2 = ev3_sensor2.INPUT_2
     us1 = ev3_sensor.UltrasonicSensor(input1)
     us2 = ev3_sensor.UltrasonicSensor(input2)
     return us1, us2
 
-def take_picture() :
+
+def take_picture():
     webcam.read()
     check, frame = webcam.read()
 
     return frame
 
-def take_and_save_picture(picture_name) :
+
+def take_and_save_picture(picture_name):
     webcam.read()
     check, frame = webcam.read()
     cv2.imwrite(os.path.abspath("pictures") + '/' + picture_name + ".jpg", frame)
 
     return frame
 
-def run_belt_motors(m1, m2, speed) :
+
+def run_belt_motors(m1, m2, speed):
     m1.on(speed)
     m2.on(speed)
 
-def stop_belt_motors(m1, m2) :
+
+def stop_belt_motors(m1, m2):
     m1.on(0)
     m2.on(0)
 
+
 #Opdaterer Ev3'ens skærm med den angivne tekst
-def write_to_screen(text) :
+def write_to_screen(text):
     display.clear()
     display.text_pixels(text, 0, 0, False, 'black', font=ev3_fonts.load('helvB24'))
     display.update()
 
+
 #Checker hvis der er noget indenfor sensoren hvis der er bliver der retuneret true
-def inf_check_for_object(inf, start_value) :
+def inf_check_for_object(inf, start_value):
     distance_buffer = 4
     distance_now = inf.proximity
     if distance_now < (start_value - distance_buffer) :
@@ -100,7 +110,8 @@ def inf_check_for_object(inf, start_value) :
         write_to_screen('Der er ikke et object ' + str(inf.proximity))
         return False
 
-def prediction_to_string(number) :
+
+def prediction_to_string(number):
     if number == 0 :
         return 'Batteri'
     if number == 1 :
@@ -108,12 +119,13 @@ def prediction_to_string(number) :
     if number == 2 :
         return 'Glas'
 
-def move_arm(targetposition, currentposition, engine) :
 
-    if currentposition == targetposition :
+def move_arm(targetposition, currentposition, engine):
+
+    if currentposition == targetposition:
         return currentposition
 
-    elif currentposition < targetposition :
+    elif currentposition < targetposition:
         if currentposition + 1 < targetposition :
             engine.on_for_rotations(speed=30, rotations=0.440)
             return currentposition + 2
@@ -127,21 +139,21 @@ def move_arm(targetposition, currentposition, engine) :
         return currentposition - 1
 
 
-def get_higest_prediction_array_number(predictions) :
+def get_higest_prediction_array_number(predictions):
     highest = max(predictions)
 
     for x in range(len(predictions)) :
         if predictions[x] == highest :
             return x
 
-def us_detection(us1, us2, us_buffer1, us_buffer2, buffer) :
+def us_detection(us1, us2, us_buffer1, us_buffer2, buffer):
     disnow1 = us1.distance_centimeters
     disnow2 = us2.distance_centimeters
     if disnow1 > us_buffer1 + buffer or disnow1 < us_buffer1 - buffer or disnow2 > us_buffer2 + buffer or disnow2 < us_buffer2 - buffer :
         return True
 
 
-def calibrate_us(us1, us2) :
+def calibrate_us(us1, us2):
     us1buffer = 0
     us2buffer = 0
     # calibrate
@@ -153,7 +165,8 @@ def calibrate_us(us1, us2) :
 
     return us1buffer, us2buffer
 
-def take_multiple_pictures(number_of_pictures, time_between_pictures) :
+
+def take_multiple_pictures(number_of_pictures, time_between_pictures):
     pictures = []
     for x in range(number_of_pictures) :
         frame = take_and_save_picture('billede' + str(x))
@@ -161,7 +174,8 @@ def take_multiple_pictures(number_of_pictures, time_between_pictures) :
         time.sleep(time_between_pictures)
     return pictures
 
-def get_prediction_from_multiple_pictures(pictures, model) :
+
+def get_prediction_from_multiple_pictures(pictures, model):
     prediction_array = [0, 0, 0]
     for x in range(len(pictures)) :
         picture = numpy.array(pictures[x][120:960, :])
@@ -173,7 +187,8 @@ def get_prediction_from_multiple_pictures(pictures, model) :
 
     return prediction_array
 
-def main() :
+
+def main():
     model = load_model('miModel/modeldeepenough.h5')
 
     us1, us2 = initialize_ultra_sonic_sensors()
@@ -193,13 +208,12 @@ def main() :
     first_picture = take_picture()
 
     picture = numpy.array(first_picture[120:960, :])
-    first_prediction = predict_image(model, picture)
+    predict_image(model, picture)
 
     print(us1.other_sensor_present, us2.other_sensor_present)
     print('Ready')
 
-
-    while True :
+    while True:
         if us_detection(us1, us2, us_buffer1, us_buffer2, 2) :
             print(us1.distance_centimeters)
             print(us2.distance_centimeters)
