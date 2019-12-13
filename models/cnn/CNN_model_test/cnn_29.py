@@ -18,7 +18,7 @@ image_size_y = 150
 
 classifier = Sequential()
 
-classifier.add(Conv2D(filters=64, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3)))
+classifier.add(Conv2D(filters=64, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3),padding='same'))
 classifier.add(LeakyReLU(alpha=0.1))
 classifier.add(get_maxpool_layer(2))
 

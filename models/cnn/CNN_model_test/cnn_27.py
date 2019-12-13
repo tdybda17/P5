@@ -21,7 +21,7 @@ activation = 'elu'
 classifier = Sequential()
 
 classifier.add(Conv2D(filters=64, kernel_size=kernel, strides=stride, input_shape=(image_size_y, image_size_x, 3),
-                      activation=activation))
+                      activation=activation,padding='same'))
 classifier.add(get_maxpool_layer(2))
 
 classifier.add(Conv2D(filters=128, kernel_size=kernel, strides=stride, activation=activation, padding='same'))
