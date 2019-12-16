@@ -1,13 +1,11 @@
 from builtins import len, range
-
 import matplotlib.pyplot as plt
 from keras.layers import Conv2D
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import MaxPooling2D
 from keras.preprocessing.image import ImageDataGenerator
-
-from image_compressor.dir_walker.dir_walker import walk_dir
+from models.cnn.dir_walker import walk_dir
 
 image_size_x = 150
 image_size_y = 150

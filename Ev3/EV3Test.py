@@ -1,5 +1,5 @@
 from keras.models import load_model
-from Ev3.customfunctions import *
+from Ev3.EV3customfunctions import *
 
 
 def main():

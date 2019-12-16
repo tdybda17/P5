@@ -1,6 +1,5 @@
 import os
 
-
 def walk_dir(path, files_extensions=[]):
     files = []
     # r=root, d=directories, f = files

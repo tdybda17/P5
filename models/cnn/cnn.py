@@ -2,7 +2,7 @@
 from keras.models import Sequential
 from keras.layers import Flatten
 from keras import backend as K, optimizers
-from models.cnn.cnn_tests.customfunctions import *
+from models.cnn.CNNcustomfunctions import *
 
 #Setting the names for the graph files and the model
 graph_acc_name = "cnn_9_acc"
