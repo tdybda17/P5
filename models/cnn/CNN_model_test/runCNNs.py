@@ -1,7 +1,7 @@
 import runpy
 
 
-runpy.run_path('cnn_1.py')
+'''runpy.run_path('cnn_1.py')
 runpy.run_path('cnn_2.py')
 runpy.run_path('cnn_3.py')
 runpy.run_path('cnn_4.py')
@@ -14,7 +14,7 @@ runpy.run_path('cnn_10.py')
 runpy.run_path('cnn_11.py')
 runpy.run_path('cnn_12.py')
 runpy.run_path('cnn_13.py')
-runpy.run_path('cnn_14.py')
+runpy.run_path('cnn_14.py')'''
 runpy.run_path('cnn_15.py')
 runpy.run_path('cnn_16.py')
 runpy.run_path('cnn_17.py')
