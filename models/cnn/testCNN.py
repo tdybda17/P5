@@ -2,7 +2,7 @@ from keras.models import load_model
 import numpy as np
 import os
 
-classifier = load_model('cnn_9.h5')
+classifier = load_model('cnn.h5')
 
 from keras.preprocessing import image
 
@@ -20,11 +20,4 @@ for filename in os.listdir('Glas'):
           if result[0][x] == integer:
                resultarray[x] += 1
 
-
-
-
-
 print(resultarray)
-
-
-
