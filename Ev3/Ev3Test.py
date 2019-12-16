@@ -3,7 +3,7 @@ from Ev3.customfunctions import *
 
 
 def main():
-    model = load_model('miModel/modeldeepenough.h5')
+    model = load_model('miModel/cnn.h5')
 
     us1, us2 = initialize_ultra_sonic_sensors()
     belt_motor_one, belt_motor_two = initialize_belt_motors()
