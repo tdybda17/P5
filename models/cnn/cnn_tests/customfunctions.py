@@ -48,21 +48,21 @@ def get_fit_generator(classifier, trainingset, testset):
                                     validation_steps=test_size // batch_size)  # number of samples to use from validation generator at the end of every epoch.
 
 
-def get_train_data_gen(train_datagen):
+def get_training_data_generator(train_datagen):
     return train_datagen.flow_from_directory('../../../images/dataset_1920x840/training',
                                              target_size=(image_size_y, image_size_x),
                                              batch_size=batch_size,
                                              class_mode='categorical')
 
 
-def get_test_data_gen(test_datagen):
+def get_validation_data_generator(test_datagen):
     return test_datagen.flow_from_directory('../../../images/dataset_1920x840/test',
                                             target_size=(image_size_y, image_size_x),
                                             batch_size=batch_size,
                                             class_mode='categorical')
 
 
-def get_image_data_gen():
+def get_image_data_generator():
     return ImageDataGenerator(rescale=1. / 255,
                               rotation_range=40,
                               width_shift_range=0.2,
@@ -71,7 +71,7 @@ def get_image_data_gen():
                               horizontal_flip=True)
 
 
-def get_rescale_gen():
+def get_validation_generator():
     return ImageDataGenerator(rescale=1. / 255)
 
 
