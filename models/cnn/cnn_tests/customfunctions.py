@@ -112,5 +112,6 @@ def create_plot_loss(history, name):
     plt.title('Training and validation loss')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
+    plt.ylim(top=1.5)
     plt.legend()
     plt.savefig(name)
