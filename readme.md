@@ -35,4 +35,27 @@ folder and then run the following command
 
     $ python models/cnn/cnn_predict_test.py
     
+## How to install and run the EV3 program
+### 1. Connection to EV3
+With your EV3 connected to the internet 
+(guide: https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/), you can establish a 
+connection with ssh with these credentials:
 
+       Hostname: ev3dev
+       Port: 22
+       Username: robot
+       Password: maker
+
+### 2. Run the server
+Next, find and run `rpyc_server.sh`
+
+    $ vscode-hello-python-master/rpyc_server.sh
+    
+Or find it directly on the EV3 display and run it
+
+
+### 3. Running the program
+Wait for the server to start up and then run the following command
+
+    $ python Ev3/run_machine.py
+    
