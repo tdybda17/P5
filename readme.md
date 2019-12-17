@@ -36,6 +36,10 @@ folder and then run the following command
     $ python models/cnn/cnn_predict_test.py
     
 ## How to install and run the EV3 program
+### Mount the flash image
+First, mount the flash image (can be downloaded from: INDSÆT LINK)
+to a microSD card and insert it into the EV3
+
 ### Connection to EV3
 With your EV3 connected to the internet 
 (guide: https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/), you can establish a 
