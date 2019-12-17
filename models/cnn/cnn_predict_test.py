@@ -8,9 +8,9 @@ from keras.preprocessing import image
 
 resultarray = [0, 0, 0]
 
-for filename in os.listdir('Glas'):
+for filename in os.listdir('../test_images'):
      np.set_printoptions(suppress=True)
-     test_image = image.load_img('Glas/' + filename, target_size=(150, 150))
+     test_image = image.load_img('../test_images/' + filename, target_size=(150, 150))
      test_image = image.img_to_array(test_image)
      test_image = test_image/255
      test_image = np.expand_dims(test_image, axis = 0)

@@ -4,7 +4,7 @@ This report sets out to solve a classification problem of sorting waste with ima
 
 To read about the hardware setup the report is needed. To run the program, read the guide below.
 
-## How to install and run the trained model
+## How to install the project
 
 ### 1. Checkout the project
 The project can be downloaded from github with this link
@@ -16,12 +16,16 @@ From `requirements.txt` download and install all requirements or with pip
 
     pip install -r requirements.txt
     
-### 3. Download the trained model
+    
+## How to test the trained model
+
+### 1. Download the trained model
 The trained model is named `cnn.h5` and can be downloaded from
 
     Indsæt-link
     
-Place the `cnn.h5` file inside the python directory called `Ev3`
+Place the `cnn.h5` file inside the python directory called `models`
     
-### 4. Running the model
+### 2. Testing the model
+
 
