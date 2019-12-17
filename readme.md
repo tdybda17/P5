@@ -15,7 +15,7 @@ The project can be downloaded from github with this link
     $ git clone https://github.com/tdybda17/P5.git
     
 ### Install requirements
-From `requirements.txt` download and install all requirements or with pip
+From `/requirements.txt` download and install all requirements or with pip
 
     $ pip install -r requirements.txt
     
@@ -24,10 +24,12 @@ From `requirements.txt` download and install all requirements or with pip
 If you do not want to run the model with our test sets, skip this section
 
 #### 1. Download the test sets
-The test sets can be downloaded from this link https://www.paste.link.dk/
+The test sets folder can be downloaded from this link
+
+    https://www.paste.link.dk/
 
 #### 2. Add it to the project
-
+Place the downloaded `test_set_cropped` in the `/images` folder
 
 ## How to test the trained model
 
@@ -36,7 +38,7 @@ The trained model is named `cnn.h5` and can be downloaded from
 
     Indsæt-link
     
-Place the `cnn.h5` file inside the python directory called `models`
+Place the `cnn.h5` file inside the python directory called `/models`
     
 ### Testing the model
 If you were to get predictions on your own pictures with the model, place them into the `models/test_images` 
