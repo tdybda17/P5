@@ -31,6 +31,8 @@ np.set_printoptions(suppress=True)
 
 print('initializations done')
 
+
+# Takes a picture and the model as input, then makes a prediction on the picture based on the model, and returns the result
 def predict_image(model, picture):
     test_image = cv2.resize(picture, (150, 150), interpolation=cv2.INTER_AREA)
     test_image = test_image / 255
@@ -40,18 +42,19 @@ def predict_image(model, picture):
     return result[0]
 
 
-#Initializer og retunere de 2 motorer til båndet
+# Initialize and returns the 2 motors to the conveyr belt
 def initialize_belt_motors():
     belt_motor_one = ev3_motor.LargeMotor('outA')
     belt_motor_two = ev3_motor.LargeMotor('outB')
     return belt_motor_one, belt_motor_two
 
 
+# Initialize and return the arm motor
 def initialize_arm_motor():
     arm_motor = ev3_motor.MediumMotor('outC')
     return arm_motor
 
-
+# Initialize and return the 2 ultrasonic sensors
 def initialize_ultra_sonic_sensors():
     input1 = ev3_sensor2.INPUT_1
     input2 = ev3_sensor2.INPUT_2
@@ -60,6 +63,7 @@ def initialize_ultra_sonic_sensors():
     return us1, us2
 
 
+# Takes a picture, by reading a frame from the camera and returning it.
 def take_picture():
     webcam.read()
     check, frame = webcam.read()
@@ -67,55 +71,35 @@ def take_picture():
     return frame
 
 
+# Run the belt motors based in the inputted speed
 def run_belt_motors(m1, m2, speed):
     m1.on(speed)
     m2.on(speed)
 
 
+# Stops the belt motors
 def stop_belt_motors(m1, m2):
     m1.on(0)
     m2.on(0)
 
 
-#Opdaterer Ev3'ens skærm med den angivne tekst
-def write_to_screen(text):
-    display.clear()
-    display.text_pixels(text, 0, 0, False, 'black', font=ev3_fonts.load('helvB24'))
-    display.update()
-
-
-#Checker hvis der er noget indenfor sensoren hvis der er bliver der retuneret true
-def inf_check_for_object(inf, start_value):
-    distance_buffer = 4
-    distance_now = inf.proximity
-    if distance_now < (start_value - distance_buffer) :
-        write_to_screen('Der er et object ' + str(inf.proximity))
-        return True
-    else :
-        write_to_screen('Der er ikke et object ' + str(inf.proximity))
-        return False
-
-
-def prediction_to_string(number):
-    if number == 0 :
-        return 'Batteri'
-    if number == 1 :
-        return 'Dåse'
-    if number == 2 :
-        return 'Glas'
-
-
+# Moves the arm from the currentposition to the targetposition
 def move_arm(targetposition, currentposition, engine):
     if currentposition != targetposition:
+        # Get the amount of steps
         rotation = abs(currentposition - targetposition) * 0.22
 
+        # Get the rotation direction
         if currentposition < targetposition:
             speed = 30
         else:
             speed = -30
 
+        # Rotate the motor
         engine.on_for_rotations(speed=speed, rotations=rotation)
 
+
+# Get the array number of the highest number in array
 def get_higest_prediction_array_number(predictions):
     highest = max(predictions)
 
@@ -123,6 +107,7 @@ def get_higest_prediction_array_number(predictions):
         if predictions[x] == highest :
             return x
 
+# Detects an object if the distance from the sensors are outside the two buffers values
 def ultrasonic_detects_object(us1, us2, us_buffer1, us_buffer2, buffer):
     disnow1 = us1.distance_centimeters
     disnow2 = us2.distance_centimeters
@@ -130,6 +115,7 @@ def ultrasonic_detects_object(us1, us2, us_buffer1, us_buffer2, buffer):
         return True
 
 
+# Calibrate the ultrasonic sensors by setting two buffers to the first distance mesured while there is no object.
 def calibrate_us(us1, us2):
     us1buffer = 0
     us2buffer = 0
@@ -143,6 +129,7 @@ def calibrate_us(us1, us2):
     return us1buffer, us2buffer
 
 
+# Takes a set amount of pictures with a set amount of delay, into an array and returns this array
 def take_multiple_pictures(number_of_pictures, time_between_pictures):
     pictures = []
     for _ in range(number_of_pictures) :
@@ -151,7 +138,9 @@ def take_multiple_pictures(number_of_pictures, time_between_pictures):
         time.sleep(time_between_pictures)
     return pictures
 
-
+# Takes an array of pictures and the model, and then makes an prediction on each of the pictures in the array
+# Each of these predictions are summed together to get a total prediction from all the pictures in the array together
+# The function then returns the array in which the predictions has been summed.
 def get_prediction_from_multiple_pictures(pictures, model):
     prediction_array = [0, 0, 0]
     for picture in pictures:
