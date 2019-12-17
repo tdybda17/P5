@@ -5,7 +5,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import MaxPooling2D
 from keras.preprocessing.image import ImageDataGenerator
-from models.cnn.dir_walker import walk_dir
+from IO.dir_walker import walk_dir
 import os.path
 
 image_size_x = 150
