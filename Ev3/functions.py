@@ -3,6 +3,7 @@ import time
 import numpy as np
 import cv2
 import rpyc
+from keras.backend import resize_images
 
 # Setup rpyc conn
 conn = rpyc.classic.connect('ev3dev')
@@ -35,6 +36,7 @@ print('initializations done')
 # Takes a picture and the model as input, then makes a prediction on the picture based on the model, and returns the result
 def predict_image(model, picture):
     test_image = cv2.resize(picture, (150, 150), interpolation=cv2.INTER_AREA)
+    test_image = resize_images()
     test_image = test_image / 255
     test_image = np.expand_dims(test_image, axis = 0)
     result = model.predict_proba(test_image)
