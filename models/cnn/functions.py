@@ -5,14 +5,14 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import MaxPooling2D
 from keras.preprocessing.image import ImageDataGenerator
-from models.cnn.dir_walker import walk_dir
+from IO.dir_walker import walk_dir
 import os.path
 
 image_size_x = 150
 image_size_y = 150
 epochs = 50
 batch_size = 32
-#Tezt_size finds the total number of images in the validation folder
+# Test_size finds the total number of images in the validation folder
 validation_size = len(walk_dir(path=os.path.abspath('../../images/dataset_1920x840/validation'), files_extensions=['.jpg']))
 
 def get_init_conv_layer(filters, kernel, stride):
@@ -31,7 +31,7 @@ def get_dropout_layer(dropout):
 def get_dense_layer(units):
     return Dense(activation="relu", units=units)
 
-#Class weights are set in this function, to balance out the number of images in each category
+# Class weights are set in this function, to balance out the number of images in each category
 def get_fit_generator(model, trainingset, testset):
     class_weight = {0: 1.92,
                     1: 1.,
@@ -74,9 +74,7 @@ def create_plot_acc(history, name):
 
     epochs = range(1, len(acc) + 1)
     plt.clf()
-    # "bo" is for "blue dot"
     plt.plot(epochs, acc, 'bo', label='Training accuracy')
-    # b is for "solid blue line"
     plt.plot(epochs, val_acc, 'b', label='Validation accuracy')
     plt.title('Training and validation accuracy')
     plt.xlabel('Epochs')
@@ -94,9 +92,7 @@ def create_plot_loss(history, name):
 
     epochs = range(1, len(loss) + 1)
     plt.clf()
-    # "bo" is for "blue dot"
     plt.plot(epochs, loss, 'bo', label='Training loss')
-    # b is for "solid blue line"
     plt.plot(epochs, val_loss, 'b', label='Validation loss')
     plt.title('Training and validation loss')
     plt.xlabel('Epochs')
