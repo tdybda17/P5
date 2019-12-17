@@ -1,14 +1,16 @@
-1. Få internet til Ev3'en, se denne guide: https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/
+1. Mount the image to an micro-sd and insert into the EV3
 
-2A.Connect til ev3 via SSH:
+2. Get internet to the Ev3 through this guide: https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/
+
+3A.Connect to the EV3 by SSH:
     Hostname: ev3dev
     Port: 22
     Username: robot
     Password: maker
 
-2.A1 cd ind i mappen vscode-hello-python-master hvor der gerne skulle ligge en fil kaldet: rpyc_server.sh
-2.A2 kør denne med: ./rpyc_server.sh
-eller
-2.B Find filen rpyc_server.sh direkte på Ev3'en og kør denne
+3.A1 cd into the folder vscode-hello-python-master where there is a file called: rpyc_server.sh
+3.A2 Run this file with: ./rpyc_server.sh
+OR
+3.B Find the file rpyc_server.sh directly on the EV3 and run this.
 
-3. Vent til serveren er startet og kør Ev3Test.py
+4. Wait for the RPyC server to start and then run the file run_machine.py, P5/Ev3/run_machine.py

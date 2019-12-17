@@ -12,7 +12,7 @@ image_size_x = 150
 image_size_y = 150
 epochs = 50
 batch_size = 32
-# Test_size finds the total number of images in the validation folder
+# validation_size finds the total number of images in the validation folder
 validation_size = len(walk_dir(path=os.path.abspath('../../images/dataset_1920x840/validation'), files_extensions=['.jpg']))
 
 def get_init_conv_layer(filters, kernel, stride):

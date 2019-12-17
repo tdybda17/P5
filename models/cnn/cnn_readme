@@ -1,0 +1,7 @@
+cnn_architecture is the architecture file that was trained. In order to train the model, the images needs to be
+downloaded and transferred into the project. The path in cnn/functions.py then has to be set to match the image path.
+
+cnn_predict_test is used to test a model on a single image. The model has to be loaded in the top of the file
+and the path to the image has to be set
+
+cnn/functions.py is the function file.
