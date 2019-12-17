@@ -1,5 +1,6 @@
 # Waste sorting with image recognition
 Link to GitHub project: https://github.com/tdybda17/P5
+Complete image repository: https://drive.google.com/open?id=1BB4NTmMUkTQYJQG2avwWECt_Ii1snB9T
 
 This report sets out to solve a classification problem of sorting waste with image classification. 
 The report is focused on using machine learning to make a waste sorting machine. With a self produced 
