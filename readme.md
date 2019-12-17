@@ -41,10 +41,10 @@ With your EV3 connected to the internet
 (guide: https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/), you can establish a 
 connection with ssh with these credentials:
 
-       Hostname: ev3dev
-       Port: 22
-       Username: robot
-       Password: maker
+    Hostname: ev3dev
+    Port: 22
+    Username: robot
+    Password: maker
 
 ### Run the server
 Next, find and run `rpyc_server.sh`
