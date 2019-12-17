@@ -4,10 +4,10 @@ import numpy as np
 import cv2
 import rpyc
 
-#setup rpyc conn
+# Setup rpyc conn
 conn = rpyc.classic.connect('ev3dev')
 
-#imports for Ev3
+# Imports for Ev3
 ev3_motor = conn.modules['ev3dev2.motor']
 ev3_sensor = conn.modules['ev3dev2.sensor.lego']
 ev3_sensor2 = conn.modules['ev3dev2.sensor']
@@ -20,7 +20,7 @@ ev3_button = conn.modules['ev3dev2.button']
 
 print('Imports done')
 
-#Webcam initialization
+# Webcam initialization
 webcam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
@@ -130,7 +130,7 @@ def calibrate_us(us1, us2):
 
 
 # Takes a set amount of pictures with a set amount of delay, into an array and returns this array
-def take_multiple_pictures(number_of_pictures, time_between_pictures):
+def take_pictures(number_of_pictures, time_between_pictures):
     pictures = []
     for _ in range(number_of_pictures) :
         frame = take_picture()
@@ -141,7 +141,7 @@ def take_multiple_pictures(number_of_pictures, time_between_pictures):
 # Takes an array of pictures and the model, and then makes an prediction on each of the pictures in the array
 # Each of these predictions are summed together to get a total prediction from all the pictures in the array together
 # The function then returns the array in which the predictions has been summed.
-def get_prediction_from_multiple_pictures(pictures, model):
+def get_prediction_from_pictures(pictures, model):
     prediction_array = [0, 0, 0]
     for picture in pictures:
         cropped_picture = numpy.array(picture[120:960, :])
