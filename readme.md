@@ -1,5 +1,5 @@
 # Waste sorting with image recognition
-Link to GitHub: https://github.com/tdybda17/P5
+Link to GitHub project: https://github.com/tdybda17/P5
 
 This report sets out to solve a classification problem of sorting waste with image classification. 
 The report is focused on using machine learning to make a waste sorting machine. With a self produced 
@@ -27,17 +27,17 @@ If you do not want to run the model with our test sets, skip this section
 #### 1. Download the test sets
 The test sets folder can be downloaded from this link
 
-    https://www.paste.link.dk/
+    https://drive.google.com/open?id=1S6JCbRyW4izYvhFkkbEUixyKk4MFN_et
 
 #### 2. Add it to the project
-Place the downloaded `test_set_cropped` in the `/images` folder
+Unzip the file and place the `test_set_cropped` folder in the `/images` folder
 
 ## How to test the trained model
 
 ### Download the trained model
 The trained model is named `cnn.h5` and can be downloaded from
 
-    Indsæt-link
+    https://drive.google.com/open?id=1KL-a9o51c2i5ZCRzoxpfPsvvF440fV56
     
 Place the `cnn.h5` file inside the python directory called `/models`
 
@@ -54,7 +54,7 @@ folder and then run the following command
     
 ## How to install and run the EV3 program
 ### Mount the flash image
-First, mount the flash image (can be downloaded from: INDSÆT LINK)
+First, mount the flash image (can be downloaded from: https://drive.google.com/open?id=18exlUHrVaqkd7XHxP7f4bjyn_ZMZ49qJ)
 to a microSD card and insert it into the EV3
 
 ### Connection to EV3
