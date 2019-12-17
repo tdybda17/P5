@@ -11,7 +11,6 @@ def main():
 
     us_buffer1, us_buffer2 = calibrate_us(us1, us2)
 
-
     run_belt_motors(belt_motor_one, belt_motor_two, speed=-30)
 
     current_arm_position = 1
