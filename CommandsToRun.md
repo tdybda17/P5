@@ -1,45 +1,27 @@
-#Library install and save
+# Waste sorting with image recognition
 
+This report sets out to solve a classification problem of sorting waste with image classification. The report is focused on using machine learning to make a waste sorting machine. With a self produced data set it was possible to train a convolutional neural network with a overall accuracy of 88.45 \%, with data the model have never seen before.
 
-##Before work:
-####pip install -r requirements.txt
+To read about the hardware setup the report is needed. To run the program, read the guide below.
 
+## How to install and run the trained model
 
-##After work:
-####pip freeze > requirements.txt
+### 1. Checkout the project
+The project can be downloaded from github with this link
 
-
-##Lightsail Ubuntu
-
-####How to connect
-Download the private-key file from P5 (Messenger)
+    https://github.com/tdybda17/P5.git
     
-    LightsailDefaultKey-eu-central-1.pem
+### 2. Install requirements
+From `requirements.txt` download and install all requirements or with pip
 
-Open terminal and enter
-
-    ssh -i <path-to-private-key> ubuntu@18.197.97.59
+    pip install -r requirements.txt
     
-You should now be connected to `ubuntu@ip-172-26-11-241:~$`
+### 3. Download the trained model
+The trained model is named `cnn.h5` and can be downloaded from
 
-
-####Running tests
-Run these commands
-
-    cd ~/desktop/models/
-    source venv/bin/activate
-    cd research/
-    export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+    Indsæt-link
     
-Then run the tests by
-
-    python object_detection/builders/model_builder_test.py
+Place the `cnn.h5` file inside the python directory called `Ev3`
     
-And you should get this
-
-    ----------------------------------------------------------------
-    Ran 16 tests in 0.088s 
-    OK
-    
-
+### 4. Running the model
 

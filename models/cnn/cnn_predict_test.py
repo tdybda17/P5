@@ -2,7 +2,7 @@ from keras.models import load_model
 import numpy as np
 import os
 
-classifier = load_model('cnn.h5')
+classifier = load_model('models/cnn.h5')
 
 from keras.preprocessing import image
 
