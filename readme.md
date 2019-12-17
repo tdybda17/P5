@@ -18,8 +18,7 @@ The project can be downloaded from github with this link
 From `requirements.txt` download and install all requirements or with pip
 
     $ pip install -r requirements.txt
-    
-    
+
 ## How to test the trained model
 
 ### Download the trained model
