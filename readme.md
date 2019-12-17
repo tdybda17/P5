@@ -79,4 +79,8 @@ Or find it directly on the EV3 display and run it
 Wait for the server to start up and then run the following command
 
     $ python Ev3/run_machine.py
-    
+
+
+# Errors
+## Paths not found
+Some errors occur when running the commands from the terminal. Try running them directly from the IDE instead.
