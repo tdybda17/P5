@@ -18,6 +18,16 @@ The project can be downloaded from github with this link
 From `requirements.txt` download and install all requirements or with pip
 
     $ pip install -r requirements.txt
+    
+    
+### Download test sets
+If you do not want to run the model with our test sets, skip this section
+
+#### 1. Download the test sets
+The test sets can be downloaded from this link https://www.paste.link.dk/
+
+#### 2. Add it to the project
+
 
 ## How to test the trained model
 
