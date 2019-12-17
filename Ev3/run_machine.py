@@ -3,7 +3,7 @@ from Ev3.functions import *
 
 
 def main():
-    model = load_model('models/cnn.h5')
+    model = load_model('../models/cnn.h5')
 
     # Initialize Ev3 motors and sensors
     us1, us2 = initialize_ultra_sonic_sensors()
