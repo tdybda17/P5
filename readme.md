@@ -39,8 +39,13 @@ The trained model is named `cnn.h5` and can be downloaded from
     Indsæt-link
     
 Place the `cnn.h5` file inside the python directory called `/models`
+
+### Test model with test set
+To run predictions on the test set `/images/test_set_cropped` simply run this command
+
+    $ python models/cnn/cnn_predict_all_tests.py
     
-### Testing the model
+### Test model with own images
 If you were to get predictions on your own pictures with the model, place them into the `models/test_images` 
 folder and then run the following command
 
